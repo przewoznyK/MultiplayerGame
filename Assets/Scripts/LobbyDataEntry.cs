@@ -12,7 +12,6 @@ public class LobbyDataEntry : MonoBehaviour
     {
         if (lobbyNameText.text == "")
         {
-
             lobbyNameText.text = "Empty";
         }
         else
