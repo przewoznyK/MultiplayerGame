@@ -1228,10 +1228,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbiesListManager
   _lobbiesMenu: {fileID: 876932743}
-  _lobbyDataItemPrefab: {fileID: 6504247317240070059, guid: 5db4dc6b633566b488f43600f759bcb2, type: 3}
+  _lobbyDataItemPrefab: {fileID: 2785373060965727268, guid: 5db4dc6b633566b488f43600f759bcb2, type: 3}
   _lobbyListContentHolder: {fileID: 2138452915}
   _mainMenuHolder: {fileID: 721056143}
-  listOfLobbies: []
+  ListOfLobbies: []
 --- !u!4 &925741279
 Transform:
   m_ObjectHideFlags: 0
@@ -1678,7 +1678,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d32a7de005a87b4e8862da94dfa8e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawnManager
-  _gamePlayerPrefab: {fileID: 3063486547513279974, guid: 34fd29215f033ea43a434d8fe18b0570, type: 3}
+  _playerLobbyPrefab: {fileID: 3063486547513279974, guid: 34fd29215f033ea43a434d8fe18b0570, type: 3}
+  _gamePlayerPrefab: {fileID: 0}
 --- !u!4 &1487388356
 Transform:
   m_ObjectHideFlags: 0
@@ -1770,7 +1771,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionManager
   MainMenuSceneName: MainMenuScene
-  OnlineSceneName: Lobby
+  LobbySceneName: Lobby
+  GameScene: GameScene
 --- !u!4 &1551415843
 Transform:
   m_ObjectHideFlags: 0
@@ -2254,6 +2256,8 @@ GameObject:
   - component: {fileID: 6702249645930096081}
   - component: {fileID: 6702249645930096083}
   - component: {fileID: 6702249645930096082}
+  - component: {fileID: 6702249645930096084}
+  - component: {fileID: 6702249645930096085}
   m_Layer: 0
   m_Name: FishnetNetworkManager
   m_TagString: Untagged
@@ -2339,6 +2343,44 @@ MonoBehaviour:
   _maximumClients: 9001
   _peerToPeer: 1
   _clientAddress: 
+--- !u!114 &6702249645930096084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6702249645930096066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08bb003fce297d4086cf8cba5aa459a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FishNet.Runtime::FishNet.Managing.Predicting.PredictionManager
+  _reduceReconcilesWithFramerate: 1
+  _minimumClientReconcileFramerate: 50
+  _createLocalStates: 1
+  _stateInterpolation: 2
+  _stateOrder: 1
+  _dropExcessiveReplicates: 1
+  _maximumServerReplicates: 15
+--- !u!114 &6702249645930096085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6702249645930096066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fdaae44044276a49a52229c1597e33b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FishNet.Runtime::FishNet.Managing.Timing.TimeManager
+  _updateOrder: 0
+  _timingType: 0
+  _allowTickDropping: 1
+  _maximumFrameTicks: 3
+  _tickRate: 30
+  _pingInterval: 1
+  _physicsMode: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

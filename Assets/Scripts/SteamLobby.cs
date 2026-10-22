@@ -55,7 +55,7 @@ public class SteamLobby : PersistentSingleton<SteamLobby>
         {
             FishNet.InstanceFinder.ServerManager.OnServerConnectionState -= OnServerStarted;
             FishNet.InstanceFinder.ClientManager.StartConnection();
-            SceneTransitionManager.Instance.LoadOnlineScene();
+            SceneTransitionManager.Instance.LoadOnlineScene(SceneTransitionManager.Instance.LobbySceneName);
         }
     }
 

@@ -7,27 +7,29 @@ using UnityEngine;
 
 public class PlayerSpawnManager : PersistentSingleton<PlayerSpawnManager>
 {
-    public List<PlayerObjectController> GamePlayers { get; private set; } = new();
-    [SerializeField] private PlayerObjectController _gamePlayerPrefab;
+    public List<PlayerLobbyController> GamePlayers { get; private set; } = new();
+    [SerializeField] private PlayerLobbyController _playerLobbyPrefab;
+    [SerializeField] private GameObject _gmePlayerPrefab;
 
     private void Start()
     {
-        InstanceFinder.SceneManager.OnClientLoadedStartScenes += SpawnPlayer;
+        InstanceFinder.SceneManager.OnClientLoadedStartScenes += SpawnLobbyPlayer;
     }
 
     private void OnDestroy()
     {
         if (InstanceFinder.SceneManager != null)
         {
-            InstanceFinder.SceneManager.OnClientLoadedStartScenes -= SpawnPlayer;
+            InstanceFinder.SceneManager.OnClientLoadedStartScenes -= SpawnLobbyPlayer;
         }
     }
 
-    private void SpawnPlayer(NetworkConnection conn, bool asServer)
+    private void SpawnLobbyPlayer(NetworkConnection conn, bool asServer)
     {
-        if (!asServer) return;
+        if (!asServer) 
+            return;
 
-        PlayerObjectController gamePlayerInstance = Instantiate(_gamePlayerPrefab);
+        PlayerLobbyController gamePlayerInstance = Instantiate(_playerLobbyPrefab);
 
         gamePlayerInstance.ConnectionID.Value = conn.ClientId;
         gamePlayerInstance.PlayerIdNumber.Value = GamePlayers.Count + 1;
@@ -36,5 +38,14 @@ public class PlayerSpawnManager : PersistentSingleton<PlayerSpawnManager>
         GamePlayers.Add(gamePlayerInstance);
 
         InstanceFinder.ServerManager.Spawn(gamePlayerInstance.gameObject, conn);
+    }
+
+    public void SpawnGamePlayer(NetworkConnection conn)
+    {
+        if (!InstanceFinder.IsServerStarted)
+            return;
+
+        GameObject player = Instantiate(_gmePlayerPrefab, Vector3.zero, Quaternion.identity);
+        InstanceFinder.ServerManager.Spawn(player, conn);
     }
 }
