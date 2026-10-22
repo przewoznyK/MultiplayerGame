@@ -17,15 +17,15 @@ public class LocalNetworkTester : MonoBehaviour
             return;
 
         InstanceFinder.ServerManager.OnServerConnectionState -= OnServerStarted;
-        SceneTransitionManager.Instance.LoadOnlineScene();
+        SceneTransitionManager.Instance.LoadOnlineScene(SceneTransitionManager.Instance.LobbySceneName);
         InstanceFinder.ClientManager.StartConnection("127.0.0.1");
     }
 
     public void TestJoin()
     {
-        InstanceFinder.ClientManager.StartConnection("127.0.0.1");
         InstanceFinder.ClientManager.OnClientConnectionState -= OnClientConnectionState;
         InstanceFinder.ClientManager.OnClientConnectionState += OnClientConnectionState;
+        InstanceFinder.ClientManager.StartConnection("127.0.0.1");
     }
 
     private void OnClientConnectionState(ClientConnectionStateArgs args)

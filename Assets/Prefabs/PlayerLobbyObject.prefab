@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3011946747110138955}
   - component: {fileID: 3063486547513279974}
   m_Layer: 0
-  m_Name: PlayerObject
+  m_Name: PlayerLobbyObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   _teleportThreshold: 1
   <PrefabId>k__BackingField: 65535
   <SpawnableCollectionId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 933036539604981553
+  <AssetPathHash>k__BackingField: 17557197331345964217
   SceneId: 0
   SerializedTransformProperties:
     Position: {x: 0, y: 0, z: 0}
@@ -102,3 +102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fae76e9a033974a88cb1a92c2dfa97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerObjectController
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 3011946747110138955}
+  _networkObjectCache: {fileID: 0}

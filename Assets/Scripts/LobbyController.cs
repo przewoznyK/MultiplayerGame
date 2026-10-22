@@ -11,10 +11,21 @@ public class LobbyController : Singleton<LobbyController>
     [SerializeField] private TextMeshProUGUI _lobbyNameText;
     [SerializeField] private Transform _playerListViewContentHolder;
     [SerializeField] private GameObject _playerListItemPrefab;
+    [SerializeField] private GameObject _startGameButton;
     private GameObject _localPlayerObject;
     private ulong _currentLobbyID;
     private bool _playerItemCreated = false;
     private List<PlayerListItem> _playerListItems = new();
+
+    public void SetIsOwner()
+    {
+        _startGameButton.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        SceneTransitionManager.Instance.LoadOnlineScene(SceneTransitionManager.Instance.GameScene);
+    }
 
     public void UpdateLobbyName()
     {
@@ -28,14 +39,12 @@ public class LobbyController : Singleton<LobbyController>
         {
             CreateHostPlayerItem();
         }
+        
         if(_playerListItems.Count < PlayerSpawnManager.Instance.GamePlayers.Count)
         {
             CreateClientPlayerItem();
         }
-        if(_playerListItems.Count > PlayerSpawnManager.Instance.GamePlayers.Count)
-        {
-            RemovePlayerItem();
-        }
+
         if(_playerListItems.Count == PlayerSpawnManager.Instance.GamePlayers.Count)
         {
             UpdatePlayerItem();
@@ -45,7 +54,7 @@ public class LobbyController : Singleton<LobbyController>
     public void FindLocalPlayer()
     {
         _localPlayerObject = GameObject.Find("LocalGamePlayer");
-        _localPlayerObject = _localPlayerObject.GetComponent<PlayerObjectController>().gameObject;
+        _localPlayerObject = _localPlayerObject.GetComponent<PlayerLobbyController>().gameObject;
     }
 
     public void CreateHostPlayerItem()
@@ -127,10 +136,10 @@ public class LobbyController : Singleton<LobbyController>
 
     public void ExitLobby()
     {
-        if (InstanceFinder.IsClient)
+        if (InstanceFinder.IsClientStarted)
             InstanceFinder.ClientManager.StopConnection();
 
-        if (InstanceFinder.IsServer)
+        if (InstanceFinder.IsServerStarted)
             InstanceFinder.ServerManager.StopConnection(true);
 
         if (SteamManager.Initialized && SteamLobby.Instance.CurrentLobbyID != 0)

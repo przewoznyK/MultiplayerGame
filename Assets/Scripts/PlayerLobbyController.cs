@@ -1,27 +1,14 @@
+using FishNet;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using Steamworks;
-using UnityEngine;
 
-public class PlayerObjectController : NetworkBehaviour
+public class PlayerLobbyController : NetworkBehaviour
 {
     public readonly SyncVar<int> ConnectionID = new SyncVar<int>();
     public readonly SyncVar<int> PlayerIdNumber = new SyncVar<int>();
     public readonly SyncVar<ulong> PlayerSteamID = new SyncVar<ulong>();
     public readonly SyncVar<string> PlayerName = new SyncVar<string>();
-
-    private PlayerSpawnManager _manager;
-    private PlayerSpawnManager Manager
-    {
-        get
-        {
-            if(_manager != null)
-            {
-                return _manager;
-            }
-            return _manager = PlayerSpawnManager.Instance;
-        }
-    }
 
     private void Awake()
     {
@@ -46,7 +33,7 @@ public class PlayerObjectController : NetworkBehaviour
     {
         base.OnStopClient();
 
-        Manager.GamePlayers.Remove(this);
+        PlayerSpawnManager.Instance.GamePlayers.Remove(this);
         LobbyController.Instance.UpdatePlayerList();
     }
 
@@ -54,9 +41,9 @@ public class PlayerObjectController : NetworkBehaviour
     {
         base.OnStartClient();
 
-        if (!Manager.GamePlayers.Contains(this))
+        if (!PlayerSpawnManager.Instance.GamePlayers.Contains(this))
         {
-            Manager.GamePlayers.Add(this);
+            PlayerSpawnManager.Instance.GamePlayers.Add(this);
         }
         LobbyController.Instance.UpdateLobbyName();
         LobbyController.Instance.UpdatePlayerList();
@@ -68,6 +55,11 @@ public class PlayerObjectController : NetworkBehaviour
             gameObject.name = "LocalGamePlayer";
             LobbyController.Instance.FindLocalPlayer();
             LobbyController.Instance.UpdateLobbyName();
+        }
+
+        if(InstanceFinder.IsHostStarted)
+        {
+            LobbyController.Instance.SetIsOwner();
         }
     }
 }

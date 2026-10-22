@@ -129,8 +129,8 @@ MonoBehaviour:
   PlayerName: 
   ConnectionID: 0
   PlayerSteamID: 0
-  PlayerNameText: {fileID: 2339477242483077064}
-  PlayerIcon: {fileID: 7995205795345792460}
+  _playerNameText: {fileID: 2339477242483077064}
+  _playerIcon: {fileID: 7995205795345792460}
 --- !u!1 &5827716544115074763
 GameObject:
   m_ObjectHideFlags: 0
