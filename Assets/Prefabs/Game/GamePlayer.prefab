@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3692185500897712075}
   - component: {fileID: 2674681186620786961}
   - component: {fileID: 1602830109011396427}
+  - component: {fileID: 244719304060984084}
   m_Layer: 0
   m_Name: GamePlayer
   m_TagString: Untagged
@@ -343,6 +344,22 @@ MonoBehaviour:
   moveSpeed: 5
   _rigidbody: {fileID: 3692185500897712075}
   moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+--- !u!114 &244719304060984084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214823025463186888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248472afe94f7ae49955b13066ef312a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.GamePlayerHealth
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 4124599060348152041}
+  _networkObjectCache: {fileID: 0}
+  maxHealth: 100
 --- !u!1 &3243644691327994761
 GameObject:
   m_ObjectHideFlags: 0
