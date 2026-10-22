@@ -22,13 +22,6 @@ public class PlayerSwordAttack : MonoBehaviour
 
     private void Awake()
     {
-        if (attackPivot == null)
-        {
-            Debug.LogError("Please assign AttackPivot in the Inspector!");
-            enabled = false;
-            return;
-        }
-
         startPosition = attackPivot.localPosition;
         startRotation = attackPivot.localRotation;
     }
