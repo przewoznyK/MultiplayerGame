@@ -6,28 +6,13 @@ namespace Game
 {
     public class GamePlayerMovement : NetworkBehaviour
     {
-        [SerializeField] private float moveSpeed = 5;
+        [SerializeField] private float _moveSpeed = 5;
         [SerializeField] private Rigidbody2D _rigidbody;
-        [SerializeField] private InputActionReference moveAction;
-
         private Vector2 _serverInput;
 
-        public override void OnStartClient()
+        public void MovePlayer(Vector2 input)
         {
-            base.OnStartClient();
-
-            if (IsOwner)
-                moveAction.action.Enable();
-        }
-
-        private void Update()
-        {
-            if (!IsOwner)
-                return;
-
-            Vector2 input = moveAction.action.ReadValue<Vector2>();
             input = Vector2.ClampMagnitude(input, 1f);
-
             SendMoveInput(input);
         }
 
@@ -39,18 +24,7 @@ namespace Game
 
         private void FixedUpdate()
         {
-            if (!IsServerInitialized)
-                return;
-
-            _rigidbody.linearVelocity = _serverInput * moveSpeed;
-        }
-
-        public override void OnStopClient()
-        {
-            if (IsOwner)
-                moveAction.action.Disable();
-
-            base.OnStopClient();
+            _rigidbody.linearVelocity = _serverInput * _moveSpeed;
         }
     }
 }
