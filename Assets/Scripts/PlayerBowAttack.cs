@@ -2,156 +2,196 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class BowPlayerAttack : MonoBehaviour
 {
-    [SerializeField] private Transform attackPivot;
+    [SerializeField] private Transform bowPivot;
+    [SerializeField] private Transform handL;
+    [SerializeField] private Transform handR;
+    [SerializeField] private Transform arrowSpawnPoint;
+    [SerializeField] private GameObject arrowPrefab;
 
-    [SerializeField] private float pullbackTime = 0.10f;
-    [SerializeField] private float thrustTime = 0.07f;
-    [SerializeField] private float slashTime = 0.12f;
-    [SerializeField] private float returnTime = 0.14f;
+    [SerializeField] private float drawTime = 0.18f;
+    [SerializeField] private float returnTime = 0.15f;
+    [SerializeField] private float bowRecoil = 0.06f;
+    [SerializeField] private float arrowSpeed = 8f;
+    [SerializeField] private float arrowLifetime = 3f;
 
-    [SerializeField]
-    private Vector2 pullbackOffset =
-        new Vector2(0f, -0.04f);
+    [SerializeField] private Vector2 handLOffset = new Vector2(0f, 0.12f);
+    [SerializeField] private Vector2 handROffset = new Vector2(0f, -0.08f);
 
-    [SerializeField]
-    private Vector2 forwardOffset =
-        new Vector2(0f, 0.12f);
+    private Vector3 bowStartPosition;
+    private Vector3 handLStartPosition;
+    private Vector3 handRStartPosition;
 
-    [SerializeField] private float slashAngle = 20f;
+    private GameObject chargingArrow;
+    private Coroutine returnRoutine;
 
-    private Vector3 startPosition;
-    private Quaternion startRotation;
-    private bool isAttacking;
+    private bool isCharging;
+    private bool isReturning;
+    private float chargeProgress;
 
     private void Awake()
     {
-        if (attackPivot == null)
-        {
-            Debug.LogError("Please assign AttackPivot in the Inspector!");
-            enabled = false;
-            return;
-        }
-
-        startPosition = attackPivot.localPosition;
-        startRotation = attackPivot.localRotation;
+        bowStartPosition = bowPivot.localPosition;
+        handLStartPosition = handL.localPosition;
+        handRStartPosition = handR.localPosition;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttacking)
+        if (Input.GetMouseButtonDown(0) && !isCharging && !isReturning)
         {
-            StartCoroutine(Attack());
+            BeginCharging();
+        }
+
+        if (isCharging && Input.GetMouseButton(0))
+        {
+            UpdateCharging();
+        }
+
+        if (isCharging && Input.GetMouseButtonUp(0))
+        {
+            ReleaseArrow();
         }
     }
 
-    private IEnumerator Attack()
+    private void BeginCharging()
     {
-        isAttacking = true;
+        isCharging = true;
+        chargeProgress = 0f;
 
-        Vector3 pulledPosition = startPosition +
-            new Vector3(
-                pullbackOffset.x,
-                pullbackOffset.y,
-                0f);
+        if (returnRoutine != null)
+        {
+            StopCoroutine(returnRoutine);
+            returnRoutine = null;
+        }
 
-        Vector3 forwardPosition = startPosition +
-            new Vector3(
-                forwardOffset.x,
-                forwardOffset.y,
-                0f);
+        chargingArrow = Instantiate(
+            arrowPrefab,
+            arrowSpawnPoint.position,
+            GetArrowRotation()
+        );
 
-        yield return Animate(
-            pulledPosition,
-            startRotation,
-            pullbackTime);
-
-        yield return Animate(
-            forwardPosition,
-            startRotation,
-            thrustTime);
-
-        yield return SweepSlash();
-
-        yield return Animate(
-            startPosition,
-            startRotation,
-            returnTime);
-
-        attackPivot.localPosition = startPosition;
-        attackPivot.localRotation = startRotation;
-
-        isAttacking = false;
+        chargingArrow.transform.SetParent(transform, true);
     }
 
-    private IEnumerator SweepSlash()
+    private void UpdateCharging()
     {
-        Quaternion leftRotation = startRotation *
-            Quaternion.Euler(0f, 0f, -slashAngle);
+        chargeProgress = Mathf.MoveTowards(
+            chargeProgress,
+            1f,
+            Time.deltaTime / Mathf.Max(drawTime, 0.01f)
+        );
 
-        Quaternion rightRotation = startRotation *
-            Quaternion.Euler(0f, 0f, slashAngle);
+        float t = Mathf.SmoothStep(0f, 1f, chargeProgress);
 
-        attackPivot.localRotation = leftRotation;
+        handL.localPosition = Vector3.Lerp(
+            handLStartPosition,
+            handLStartPosition + new Vector3(
+                handLOffset.x, handLOffset.y, 0f),
+            t
+        );
+
+        handR.localPosition = Vector3.Lerp(
+            handRStartPosition,
+            handRStartPosition + new Vector3(
+                handROffset.x, handROffset.y, 0f),
+            t
+        );
+
+        bowPivot.localPosition = Vector3.Lerp(
+            bowStartPosition,
+            bowStartPosition - new Vector3(0f, bowRecoil, 0f),
+            t
+        );
+
+        if (chargingArrow != null)
+        {
+            chargingArrow.transform.position = arrowSpawnPoint.position;
+            chargingArrow.transform.rotation = GetArrowRotation();
+        }
+    }
+
+    private void ReleaseArrow()
+    {
+        isCharging = false;
+
+        if (chargingArrow != null)
+        {
+            GameObject arrow = chargingArrow;
+            chargingArrow = null;
+
+            arrow.transform.SetParent(null, true);
+
+            StartCoroutine(FlyArrow(arrow, -transform.up.normalized));
+        }
+
+        returnRoutine = StartCoroutine(ReturnToIdle());
+    }
+
+    private IEnumerator FlyArrow(GameObject arrow, Vector3 direction)
+    {
+        float elapsed = 0f;
+
+        while (arrow != null && elapsed < arrowLifetime)
+        {
+            arrow.transform.position +=
+                direction.normalized * arrowSpeed * Time.deltaTime;
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (arrow != null)
+        {
+            Destroy(arrow);
+        }
+    }
+
+    private IEnumerator ReturnToIdle()
+    {
+        isReturning = true;
+
+        Vector3 bowCurrent = bowPivot.localPosition;
+        Vector3 leftCurrent = handL.localPosition;
+        Vector3 rightCurrent = handR.localPosition;
 
         float elapsed = 0f;
 
-        while (elapsed < slashTime)
+        while (elapsed < returnTime)
         {
             elapsed += Time.deltaTime;
 
-            float t = Mathf.Clamp01(elapsed / slashTime);
+            float t = Mathf.Clamp01(elapsed / returnTime);
             float smoothT = Mathf.SmoothStep(0f, 1f, t);
 
-            attackPivot.localPosition = startPosition +
-                new Vector3(
-                    forwardOffset.x,
-                    forwardOffset.y,
-                    0f);
+            bowPivot.localPosition = Vector3.Lerp(
+                bowCurrent, bowStartPosition, smoothT);
 
-            attackPivot.localRotation = Quaternion.Slerp(
-                leftRotation,
-                rightRotation,
-                smoothT);
+            handL.localPosition = Vector3.Lerp(
+                leftCurrent, handLStartPosition, smoothT);
+
+            handR.localPosition = Vector3.Lerp(
+                rightCurrent, handRStartPosition, smoothT);
 
             yield return null;
         }
 
-        attackPivot.localRotation = rightRotation;
+        bowPivot.localPosition = bowStartPosition;
+        handL.localPosition = handLStartPosition;
+        handR.localPosition = handRStartPosition;
+
+        isReturning = false;
+        returnRoutine = null;
     }
 
-    private IEnumerator Animate(
-        Vector3 targetPosition,
-        Quaternion targetRotation,
-        float duration)
+    private Quaternion GetArrowRotation()
     {
-        Vector3 fromPosition = attackPivot.localPosition;
-        Quaternion fromRotation = attackPivot.localRotation;
+        Vector3 direction = transform.up;
 
-        float elapsed = 0f;
+        float angle = Mathf.Atan2(direction.y, direction.x)
+                    * Mathf.Rad2Deg;
 
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-
-            float t = Mathf.Clamp01(elapsed / duration);
-            float smoothT = Mathf.SmoothStep(0f, 1f, t);
-
-            attackPivot.localPosition = Vector3.Lerp(
-                fromPosition,
-                targetPosition,
-                smoothT);
-
-            attackPivot.localRotation = Quaternion.Slerp(
-                fromRotation,
-                targetRotation,
-                smoothT);
-
-            yield return null;
-        }
-
-        attackPivot.localPosition = targetPosition;
-        attackPivot.localRotation = targetRotation;
+        return Quaternion.Euler(0f, 0f, angle - 180f);
     }
 }

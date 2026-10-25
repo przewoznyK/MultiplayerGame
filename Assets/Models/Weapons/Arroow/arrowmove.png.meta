@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a5d9c296017b1074180f4baffe04ce45
+guid: 05545b05da4c9674dbec6dcb46bbb04b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2506977472860019619
-    second: DwarfTest1_0
+      213: 4438558141504686236
+    second: arrowmove_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DwarfTest1_0
+      name: arrowmove_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 7
-        width: 124
-        height: 112
+        y: 0
+        width: 92
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3ab5ab1aab29ac220800000000000000
-      internalID: 2506977472860019619
+      spriteID: c980e4bfc1de89d30800000000000000
+      internalID: 4438558141504686236
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DwarfTest1_0: 2506977472860019619
+      arrowmove_0: 4438558141504686236
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

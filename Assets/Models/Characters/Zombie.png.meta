@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e8dc3d345cdb13f40a0933770facce9f
+guid: 928b9630fe046ac4f88e8283a07a57d5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2064529587162830707
-    second: Hood3_0
+      213: 6019453725058403666
+    second: Zombie_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hood3_0
+      name: Zombie_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 8
-        width: 114
-        height: 112
+        x: 13
+        y: 9
+        width: 96
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 377df1f98bea6ac10800000000000000
-      internalID: 2064529587162830707
+      spriteID: 25d02004545698350800000000000000
+      internalID: 6019453725058403666
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Hood3_0: 2064529587162830707
+      Zombie_0: 6019453725058403666
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
