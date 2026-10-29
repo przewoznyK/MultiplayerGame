@@ -58,7 +58,7 @@ namespace Game
             _moveInput = Vector2.zero;
 
         private void OnAttackPerformed(InputAction.CallbackContext _) =>
-            _gamePlayerAttack.AttackPlayer();
+            _gamePlayerAttack.PlayAttackAnimation();
 
         private void OnTick()
         {

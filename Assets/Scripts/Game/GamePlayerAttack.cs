@@ -14,6 +14,7 @@ namespace Game
         [SerializeField] private Vector2 _pullbackOffset = new Vector2(0f, -0.04f);
         [SerializeField] private Vector2 _forwardOffset = new Vector2(0f, 0.12f);
         [SerializeField] private float _slashAngle = -70f;
+        [SerializeField] private LayerMask _enemyLayer;
 
         private Vector2 _startPosition;
         private Quaternion _startRotation;
@@ -25,17 +26,17 @@ namespace Game
             _startRotation = _attackPivot.localRotation;
         }
 
-        public void AttackPlayer()
+        public void PlayAttackAnimation()
         {
             if (_isAttacking) 
                 return;
 
             StartCoroutine(Attack());
-            CmdAttack();
+            CmdPlayAttackAnimation();
         }
 
         [ServerRpc]
-        private void CmdAttack()
+        private void CmdPlayAttackAnimation()
         {
             if (!_isAttacking)
                 StartCoroutine(Attack());
@@ -48,6 +49,23 @@ namespace Game
         {
             if (!_isAttacking)
                 StartCoroutine(Attack());
+        }
+
+        [ServerRpc]
+        public void CmdPerformAttack()
+        {
+            if (targetPoint == null) return;
+
+            Vector2 size = new Vector2(radius * 2f, height);
+            float angle = targetPoint.eulerAngles.z;
+
+            Collider2D[] hitEnemies = Physics2D.OverlapCapsuleAll(targetPoint.position, size, CapsuleDirection2D.Vertical, angle, _enemyLayer);
+
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                if(enemy.TryGetComponent(out Health enemyHealth))
+                    enemyHealth.TakeDamage(1000);
+            }
         }
 
         private IEnumerator Attack()
@@ -64,6 +82,9 @@ namespace Game
 
             _attackPivot.localPosition = _startPosition;
             _attackPivot.localRotation = _startRotation;
+
+            if (IsOwner)
+                CmdPerformAttack();
 
             _isAttacking = false;
         }
@@ -114,6 +135,34 @@ namespace Game
 
             _attackPivot.localPosition = targetPosition;
             _attackPivot.localRotation = targetRotation;
+        }
+
+        public Transform targetPoint;
+        public float height = 2f;
+        public float radius = 0.5f;
+        public Color gizmoColor = Color.green;
+
+        private void OnDrawGizmos()
+        {
+            if (targetPoint == null)
+                return;
+
+            Gizmos.color = gizmoColor;
+            Gizmos.matrix = Matrix4x4.TRS(targetPoint.position, targetPoint.rotation, Vector3.one);
+
+            float pointOffset = Mathf.Max(0, (height / 2f) - radius);
+
+            Vector3 topPoint = new Vector3(0, pointOffset, 0);
+            Vector3 bottomPoint = new Vector3(0, -pointOffset, 0);
+
+            Gizmos.DrawWireSphere(topPoint, radius);
+            Gizmos.DrawWireSphere(bottomPoint, radius);
+
+            Vector3 right = new Vector3(radius, 0, 0);
+
+            Gizmos.DrawLine(topPoint + right, bottomPoint + right);
+            Gizmos.DrawLine(topPoint - right, bottomPoint - right);
+            Gizmos.matrix = Matrix4x4.identity;
         }
     }
 }

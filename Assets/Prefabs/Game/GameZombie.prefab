@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 632704518309909292}
   - component: {fileID: 3692185500897712075}
   - component: {fileID: 2674681186620786961}
-  - component: {fileID: 4991806406703292554}
   - component: {fileID: 268759045536674886}
-  m_Layer: 0
+  - component: {fileID: -9211074332455704512}
+  - component: {fileID: 2961845302447923499}
+  m_Layer: 6
   m_Name: GameZombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +74,7 @@ MonoBehaviour:
   <AssetPathHash>k__BackingField: 322281069371018875
   SceneId: 0
   SerializedTransformProperties:
-    Position: {x: 384.643, y: 143.18336, z: 0}
+    Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     Scale: {x: 1, y: 1, z: 1}
     IsValid: 1
@@ -84,8 +85,10 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   <PredictedOwner>k__BackingField: {fileID: 0}
   NetworkBehaviours:
-  - {fileID: 0}
   - {fileID: 632704518309909292}
+  - {fileID: 268759045536674886}
+  - {fileID: -9211074332455704512}
+  - {fileID: 2961845302447923499}
   - {fileID: 4223360867101921979}
   InitializedParentNetworkBehaviour: {fileID: 0}
   InitializedNestedNetworkObjects: []
@@ -97,7 +100,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584089990291502099
+  _initializedTimestamp: -8584082993950460179
 --- !u!114 &632704518309909292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FishNet.Runtime::FishNet.Component.Transforming.NetworkTransform
-  _componentIndexCache: 1
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 4124599060348152041}
   _networkObjectCache: {fileID: 4124599060348152041}
   _componentConfiguration: 3
@@ -207,25 +210,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &4991806406703292554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214823025463186888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0f0b6ba10b67eb4cbde29c7e7f11ceb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZombieAI
-  _componentIndexCache: 255
-  _addedNetworkObject: {fileID: 4124599060348152041}
-  _networkObjectCache: {fileID: 0}
-  moveSpeed: 2.5
-  detectionRange: 10
-  updateTargetInterval: 0.25
-  rb: {fileID: 3692185500897712075}
 --- !u!114 &268759045536674886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,10 +222,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf38576886297ab41bec485a2913851b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.ZombieAttack
-  _componentIndexCache: 255
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 4124599060348152041}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 4124599060348152041}
   damage: 10
+--- !u!114 &-9211074332455704512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214823025463186888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2463e3ee61386a54f829de221a72be01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.ZombieMovement
+  _componentIndexCache: 2
+  _addedNetworkObject: {fileID: 4124599060348152041}
+  _networkObjectCache: {fileID: 4124599060348152041}
+  _moveSpeed: 2.5
+  _detectionRange: 10
+  _rb: {fileID: 3692185500897712075}
+--- !u!114 &2961845302447923499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214823025463186888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 243d890d69d49d44cb8f1daf8149a4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Health
+  _componentIndexCache: 3
+  _addedNetworkObject: {fileID: 4124599060348152041}
+  _networkObjectCache: {fileID: 4124599060348152041}
+  maxHealth: 10
 --- !u!1 &3243644691327994761
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453481867b26f7c43b5bf38802a5f50e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FishNet.Runtime::FishNet.Component.Transforming.Beta.NetworkTickSmoother
-  _componentIndexCache: 2
+  _componentIndexCache: 4
   _addedNetworkObject: {fileID: 4124599060348152041}
   _networkObjectCache: {fileID: 4124599060348152041}
   _initializationSettings:
