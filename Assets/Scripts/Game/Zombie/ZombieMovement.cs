@@ -7,6 +7,7 @@ namespace Game
     public class ZombieMovement : NetworkBehaviour
     {
         [SerializeField] private float _moveSpeed = 2.5f;
+        [SerializeField] private float _rotationSpeed = 360f;
         [SerializeField] private float _detectionRange = 10f;
         [SerializeField] private Rigidbody2D _rb;
         private readonly SyncVar<Transform> _target = new SyncVar<Transform>();
@@ -41,6 +42,9 @@ namespace Game
 
                 return;
             }
+
+            float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+            _rb.rotation = Mathf.MoveTowardsAngle(_rb.rotation, targetAngle, _rotationSpeed * Time.fixedDeltaTime);
 
             direction = direction.normalized;
             _rb.linearVelocity = direction * _moveSpeed;
