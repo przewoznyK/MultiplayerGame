@@ -55,9 +55,9 @@ namespace Game
             Transform nearest = null;
             float nearestDistance = _detectionRange * _detectionRange;
 
-            foreach (GameObject player in GamePlayerSpawner.Instance.Players)
+            foreach (var player in GamePlayerSpawnManager.Instance.GamePlayers)
             {
-                if (player == null || !player.activeInHierarchy)
+                if (player == null || !player.gameObject.activeInHierarchy)
                     continue;
 
                 float distance = ((Vector2)player.transform.position - _rb.position).sqrMagnitude;

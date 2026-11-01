@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3011946747110138955}
   - component: {fileID: 3063486547513279974}
   m_Layer: 0
-  m_Name: PlayerLobbyObject
+  m_Name: PlayerLobby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,33 +63,34 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 65535
+  <PrefabId>k__BackingField: 14
   <SpawnableCollectionId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 17557197331345964217
+  <AssetPathHash>k__BackingField: 2597625508857471195
   SceneId: 0
   SerializedTransformProperties:
     Position: {x: 0, y: 0, z: 0}
-    Rotation: {x: 0, y: 0, z: 0, w: 0}
-    Scale: {x: 0, y: 0, z: 0}
-    IsValid: 0
+    Rotation: {x: 0, y: 0, z: 0, w: 1}
+    Scale: {x: 1, y: 1, z: 1}
+    IsValid: 1
   <IsNested>k__BackingField: 0
   WasActiveDuringEdit: 0
   WasActiveDuringEdit_Set1: 1
   <ComponentIndex>k__BackingField: 0
   <PredictedSpawn>k__BackingField: {fileID: 0}
   <PredictedOwner>k__BackingField: {fileID: 0}
-  NetworkBehaviours: []
+  NetworkBehaviours:
+  - {fileID: 3063486547513279974}
   InitializedParentNetworkBehaviour: {fileID: 0}
   InitializedNestedNetworkObjects: []
   RuntimeParentNetworkBehaviour: {fileID: 0}
   RuntimeChildNetworkBehaviours: []
   _isNetworked: 1
   _isSpawnable: 1
-  _isGlobal: 0
+  _isGlobal: 1
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: 0
+  _initializedTimestamp: -8584080636077681412
 --- !u!114 &3063486547513279974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fae76e9a033974a88cb1a92c2dfa97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerObjectController
-  _componentIndexCache: 255
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 3011946747110138955}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 3011946747110138955}

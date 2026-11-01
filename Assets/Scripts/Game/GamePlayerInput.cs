@@ -12,7 +12,7 @@ namespace Game
         [SerializeField] private InputActionReference _attackAction;
         [SerializeField] private GamePlayerMovement _gamePlayerMovement;
         [SerializeField] private GamePlayerLook _gamePlayerLook;
-        [SerializeField] private GamePlayerAttack _gamePlayerAttack;
+        [SerializeField] private GamePlayerAttack _playerAttack;
         private Vector2 _moveInput;
 
         public override void OnStartClient()
@@ -58,7 +58,7 @@ namespace Game
             _moveInput = Vector2.zero;
 
         private void OnAttackPerformed(InputAction.CallbackContext _) =>
-            _gamePlayerAttack.PlayAttackAnimation();
+            _playerAttack.Attack();
 
         private void OnTick()
         {

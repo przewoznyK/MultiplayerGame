@@ -1,6 +1,5 @@
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using System.Globalization;
 using UnityEngine;
 
 namespace Game

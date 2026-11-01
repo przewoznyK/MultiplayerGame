@@ -39,9 +39,7 @@ public class LobbiesListManager : Singleton<LobbiesListManager>
     public void DestroyLobbies()
     {
         foreach (var item in ListOfLobbies)
-        {
             Destroy(item);
-        }
 
         ListOfLobbies.Clear();
     }

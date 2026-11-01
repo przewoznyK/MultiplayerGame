@@ -1112,13 +1112,13 @@ MonoBehaviour:
   _componentIndexCache: 255
   _addedNetworkObject: {fileID: 1993399085}
   _networkObjectCache: {fileID: 0}
-  _gamePlayerPrefab: {fileID: 214823025463186888, guid: 5dcd85271686c1247a1b60f127064eb3, type: 3}
+  GamePlayers: []
+  _gamePlayerPrefab: {fileID: 7977201594160911147, guid: 5dcd85271686c1247a1b60f127064eb3, type: 3}
   _zombiePrefab: {fileID: 214823025463186888, guid: 75329c6d6764a6844baaaffc07c2db23, type: 3}
   _spawnPoints:
   - {fileID: 359759626}
   - {fileID: 102226970}
   - {fileID: 1927990277}
-  Players: []
 --- !u!4 &1993399087
 Transform:
   m_ObjectHideFlags: 0

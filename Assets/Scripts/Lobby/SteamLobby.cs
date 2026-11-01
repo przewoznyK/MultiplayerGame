@@ -12,7 +12,6 @@ public class SteamLobby : PersistentSingleton<SteamLobby>
 
     protected Callback<LobbyMatchList_t> LobbyList;
     protected Callback<LobbyDataUpdate_t> LobbyDataUpdated;
-    private Callback<LobbyChatUpdate_t> _lobbyChatUpdate;
 
     public List<CSteamID> lobbyIDs = new();
 
@@ -27,8 +26,6 @@ public class SteamLobby : PersistentSingleton<SteamLobby>
 
         LobbyList = Callback<LobbyMatchList_t>.Create(OnGetLobbyList);
         LobbyDataUpdated = Callback<LobbyDataUpdate_t>.Create(OnGetLobbyData);
-        _lobbyChatUpdate =
-        Callback<LobbyChatUpdate_t>.Create(OnLobbyChatUpdate);
     }
 
     private bool _isHost = false;
@@ -36,9 +33,7 @@ public class SteamLobby : PersistentSingleton<SteamLobby>
     private void OnLobbyCreated(LobbyCreated_t callback)
     {
         if (callback.m_eResult != EResult.k_EResultOK)
-        {
             return;
-        }
 
         _isHost = true;
 
@@ -59,38 +54,12 @@ public class SteamLobby : PersistentSingleton<SteamLobby>
         }
     }
 
-    private void OnLobbyChatUpdate(LobbyChatUpdate_t result)
-    {
-        if (result.m_ulSteamIDLobby != CurrentLobbyID)
-            return;
-
-        var change = (EChatMemberStateChange)
-            result.m_rgfChatMemberStateChange;
-
-        if ((change & EChatMemberStateChange.k_EChatMemberStateChangeLeft) != 0)
-        {
-            Debug.Log($"Gracz opuścił lobby: {result.m_ulSteamIDUserChanged}");
-        }
-
-        if ((change & EChatMemberStateChange.k_EChatMemberStateChangeDisconnected) != 0)
-        {
-            Debug.Log($"Gracz rozłączył się: {result.m_ulSteamIDUserChanged}");
-        }
-
-        if ((change & EChatMemberStateChange.k_EChatMemberStateChangeKicked) != 0)
-        {
-            Debug.Log($"Gracz został wyrzucony: {result.m_ulSteamIDUserChanged}");
-        }
-    }
-
     private void OnLobbyEntered(LobbyEnter_t callback)
     {
         CurrentLobbyID = callback.m_ulSteamIDLobby;
 
         if (_isHost)
-        {
             return;
-        }
 
         string hostAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
         FishNet.InstanceFinder.ClientManager.StartConnection(hostAddress);
@@ -114,9 +83,7 @@ public class SteamLobby : PersistentSingleton<SteamLobby>
     public void GetLobbiesList()
     {
         if (lobbyIDs.Count > 0)
-        {
             lobbyIDs.Clear();
-        }
 
         SteamMatchmaking.AddRequestLobbyListResultCountFilter(60);
         SteamMatchmaking.RequestLobbyList();
@@ -125,9 +92,7 @@ public class SteamLobby : PersistentSingleton<SteamLobby>
     public void OnGetLobbyList(LobbyMatchList_t result)
     {
         if (LobbiesListManager.Instance.ListOfLobbies.Count > 0)
-        {
             LobbiesListManager.Instance.DestroyLobbies();
-        }
 
         for (int i = 0; i < result.m_nLobbiesMatching; i++)
         {

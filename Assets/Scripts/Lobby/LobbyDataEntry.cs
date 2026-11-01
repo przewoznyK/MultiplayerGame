@@ -11,13 +11,9 @@ public class LobbyDataEntry : MonoBehaviour
     public void SetLobbyData()
     {
         if (lobbyNameText.text == "")
-        {
             lobbyNameText.text = "Empty";
-        }
         else
-        {
             lobbyNameText.text = lobbyName;
-        }
     }
 
     public void JoinLobby()

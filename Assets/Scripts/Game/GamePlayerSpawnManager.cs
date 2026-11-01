@@ -1,33 +1,43 @@
+using Core;
 using FishNet.Connection;
 using FishNet.Object;
+using Lobby;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game
 {
-    public class GamePlayerSpawner : NetworkBehaviour
+    public class GamePlayerSpawnManager : NetSingleton<GamePlayerSpawnManager>
     {
-        public static GamePlayerSpawner Instance; 
-        [SerializeField] private GameObject _gamePlayerPrefab;
+        public List<GamePlayer> GamePlayers;
+        [SerializeField] private GamePlayer _gamePlayerPrefab;
         [SerializeField] private GameObject _zombiePrefab;
         [SerializeField] private Transform[] _spawnPoints;
         private int _nextSpawnIndex = -1;
-        public List<GameObject> Players;
         private bool _zombieSpawned;
-
-        private void Awake()
-        {
-            Instance = this;
-        }
 
         public override void OnSpawnServer(NetworkConnection conn)
         {
             Transform spawnPoint = GetSpawnPoint();
-            GameObject player = Instantiate(_gamePlayerPrefab, spawnPoint.position, spawnPoint.rotation);
+            int playerClassIndex = 0;
 
-            Spawn(player, conn, gameObject.scene);
-            Players.Add(player);
+            PlayerLobby sessionData = LobbyPlayerSpawnManager.Instance.GamePlayers.FirstOrDefault(p => p.Owner == conn);
+
+            if (sessionData != null)
+                playerClassIndex = sessionData.ClassIndex.Value;
+            else
+            {
+                Debug.LogWarning($"Missing lobby data for connection {conn.ClientId}. Defaulting to class 0.");
+            }
+
+            GamePlayer player = Instantiate(_gamePlayerPrefab, spawnPoint.position, spawnPoint.rotation);
+            player.Initialize(playerClassIndex);
+
+            Spawn(player.gameObject, conn, gameObject.scene);
+            GamePlayers.Add(player);
+
             if (!_zombieSpawned)
                 StartCoroutine(SpawnZombieAfterDelay());
         }
