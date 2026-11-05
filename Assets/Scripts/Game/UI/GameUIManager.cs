@@ -2,12 +2,13 @@ using Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game
+namespace Game.UI
 {
     public class GameUIManager : Singleton<GameUIManager>
     {
+        public InteractorUI InteractorUI;
         [SerializeField] private Slider _playerHealthSlider;
-        
+
         public void InitializePlayerHealthSlider(int maxHp)
         {
             _playerHealthSlider.maxValue = maxHp;

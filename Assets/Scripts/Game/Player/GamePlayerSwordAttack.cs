@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class GamePlayerSwordAttack : GamePlayerAttack
+    public class GamePlayerSwordAttack : WeaponController
     {
         [Header("ANIMATION")]
         [SerializeField] private Transform _attackPivot;
@@ -20,42 +20,19 @@ namespace Game
         private Vector2 _startPosition;
         private Quaternion _startRotation;
         private bool _isAttacking;
+        private int _damage = 10;
 
         private void Awake()
         {
+            _attackPivot = transform.parent;
             _startPosition = _attackPivot.localPosition;
             _startRotation = _attackPivot.localRotation;
         }
 
-        public override void Attack()
+        public override void PerformServerLogic(GamePlayer owner)
         {
-            if (_isAttacking)
+            if (targetPoint == null)
                 return;
-
-            StartCoroutine(AttackAnimation());
-            CmdPlayAttackAnimation();
-        }
-
-        [ServerRpc]
-        private void CmdPlayAttackAnimation()
-        {
-            if (!_isAttacking)
-                StartCoroutine(AttackAnimation());
-
-            RpcPlayAttackAnimation();
-        }
-
-        [ObserversRpc(ExcludeOwner = true)]
-        private void RpcPlayAttackAnimation()
-        {
-            if (!_isAttacking)
-                StartCoroutine(AttackAnimation());
-        }
-
-        [ServerRpc]
-        public void CmdPerformAttack()
-        {
-            if (targetPoint == null) return;
 
             Vector2 size = new Vector2(radius * 2f, height);
             float angle = targetPoint.eulerAngles.z;
@@ -64,17 +41,23 @@ namespace Game
 
             foreach (Collider2D enemy in hitEnemies)
             {
-                if(enemy.TryGetComponent(out Health enemyHealth))
-                    enemyHealth.TakeDamage(1000);
+                if (enemy.TryGetComponent(out Health enemyHealth))
+                    enemyHealth.TakeDamage(_damage);
             }
+        }
+
+        public override void PlayAttackAnimation()
+        {
+            if (_isAttacking == false)
+                StartCoroutine(AttackAnimation());
         }
 
         private IEnumerator AttackAnimation()
         {
             _isAttacking = true;
 
-            Vector2 pulledPosition = _startPosition + new Vector2(_pullbackOffset.x, _pullbackOffset.y);
-            Vector2 forwardPosition = _startPosition + new Vector2(_forwardOffset.x, _forwardOffset.y);
+            Vector2 pulledPosition = _startPosition + _pullbackOffset;
+            Vector2 forwardPosition = _startPosition + _forwardOffset;
 
             yield return Animate(pulledPosition, _startRotation, _pullbackTime);
             yield return Animate(forwardPosition, _startRotation, _thrustTime);
@@ -83,9 +66,6 @@ namespace Game
 
             _attackPivot.localPosition = _startPosition;
             _attackPivot.localRotation = _startRotation;
-
-            if (IsOwner)
-                CmdPerformAttack();
 
             _isAttacking = false;
         }
@@ -96,19 +76,16 @@ namespace Game
             Quaternion rightRotation = _startRotation * Quaternion.Euler(0f, 0f, _slashAngle);
 
             _attackPivot.localRotation = leftRotation;
-
             float elapsed = 0f;
 
             while (elapsed < _slashTime)
             {
                 elapsed += Time.deltaTime;
-
                 float t = Mathf.Clamp01(elapsed / _slashTime);
                 float smoothT = Mathf.SmoothStep(0f, 1f, t);
 
-                _attackPivot.localPosition = _startPosition + new Vector2(_forwardOffset.x, _forwardOffset.y);
+                _attackPivot.localPosition = _startPosition + _forwardOffset;
                 _attackPivot.localRotation = Quaternion.Slerp(leftRotation, rightRotation, smoothT);
-
                 yield return null;
             }
 
@@ -124,13 +101,11 @@ namespace Game
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
-
                 float t = Mathf.Clamp01(elapsed / duration);
                 float smoothT = Mathf.SmoothStep(0f, 1f, t);
 
                 _attackPivot.localPosition = Vector3.Lerp(fromPosition, targetPosition, smoothT);
                 _attackPivot.localRotation = Quaternion.Slerp(fromRotation, targetRotation, smoothT);
-
                 yield return null;
             }
 
