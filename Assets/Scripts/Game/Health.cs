@@ -6,13 +6,13 @@ namespace Game
 {
     public class Health : NetworkBehaviour
     {
-        [SerializeField] protected int maxHealth = 100;
+        [SerializeField] protected int _maxHealth = 100;
         protected readonly SyncVar<int> _health = new SyncVar<int>(100);
 
         public override void OnStartServer()
         {
             base.OnStartServer();
-            _health.Value = maxHealth;
+            _health.Value = _maxHealth;
         }
 
         public void TakeDamage(int damage)

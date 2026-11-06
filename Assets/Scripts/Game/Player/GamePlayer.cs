@@ -1,4 +1,5 @@
 using FishNet.Object;
+using Game.Data;
 using Global;
 using UnityEngine;
 
@@ -7,39 +8,42 @@ namespace Game
     public class GamePlayer : NetworkBehaviour
     {
         [SerializeField] private SpriteRenderer _bodySR;
-        [SerializeField] private Transform _weaponHolder;
-        [SerializeField] private WeaponController _currentWeapon;
+        [SerializeField] private Transform _itemHolder;
+        private EquippableController _currentEquippable;
 
         public void Initialize(int classIndex)
         {
             _bodySR.sprite = SpriteManager.Instance.GetClassSpriteById(classIndex);
         }
 
-        public void UpdateWeapon(ItemData itemData)
+        public void UpdateEquippable(ItemData itemData)
         {
-            if (_currentWeapon != null)
-                Destroy(_currentWeapon.gameObject);
+            if (_currentEquippable != null)
+                Destroy(_currentEquippable.gameObject);
 
-            if (itemData == null || itemData.WeaponVisualPrefab == null) 
+            if (itemData == null || itemData.VisualPrefab == null)
                 return;
 
-            _currentWeapon = Instantiate(itemData.WeaponVisualPrefab, _weaponHolder);
+            EquippableController spawnedItem = Instantiate(itemData.VisualPrefab, _itemHolder);
+            spawnedItem.Initialize(itemData);
+
+            _currentEquippable = spawnedItem;
         }
 
         public void Attack()
         {
-            if (IsOwner == false || _currentWeapon == null) 
+            if (IsOwner == false || _currentEquippable == null) 
                 return;
 
-            _currentWeapon.PlayAttackAnimation();
+            _currentEquippable.PlayPrimaryVisuals();
             CmdPerformAttack();
         }
 
         [ServerRpc]
         private void CmdPerformAttack()
         {
-            if (_currentWeapon != null)
-                _currentWeapon.PerformServerLogic(this);
+            if (_currentEquippable != null)
+                _currentEquippable.PerformServerLogic(this);
 
             RpcPlayAttackAnimation();
         }
@@ -47,8 +51,8 @@ namespace Game
         [ObserversRpc(ExcludeOwner = true)]
         private void RpcPlayAttackAnimation()
         {
-            if (_currentWeapon != null)
-                _currentWeapon.PlayAttackAnimation();
+            if (_currentEquippable != null)
+                _currentEquippable.PlayPrimaryVisuals();
         }
     }
 }

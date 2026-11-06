@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 3086563621350160368}
   - component: {fileID: 2057210879217777379}
   m_Layer: 0
-  m_Name: Hands
+  m_Name: VisualHands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,6 +142,9 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 0}
   _damage: 10
   _attackCooldown: 1.5
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _handL: {fileID: 7145960945885000785}
   _handR: {fileID: 1482272630306430066}
   _windupOffset: {x: -0.1, y: -0.02}
@@ -152,6 +155,10 @@ MonoBehaviour:
   _arcWidth: 0.25
   _windupAngle: 45
   _punchAngle: 70
+  _targetPoint: {fileID: 0}
+  _height: 2
+  _radius: 0.5
+  _gizmoColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &3802765656788658509
 GameObject:
   m_ObjectHideFlags: 0

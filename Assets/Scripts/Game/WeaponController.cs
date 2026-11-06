@@ -2,9 +2,10 @@ using UnityEngine;
 
 namespace Game
 {
-    public abstract class WeaponController : MonoBehaviour
+    public class WeaponController : EquippableController
     {
-        public abstract void PlayAttackAnimation();
-        public abstract void PerformServerLogic(GamePlayer owner);
+        public override void PlayPrimaryVisuals() { }
+        public override void PerformServerLogic(GamePlayer owner) { }
+        [SerializeField] protected LayerMask _targetMask;
     }
 }

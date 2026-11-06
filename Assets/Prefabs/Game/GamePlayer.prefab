@@ -210,10 +210,6 @@ MonoBehaviour:
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
-    m_ActionName: 'Player/Interact[/Keyboard/e]'
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 27c5f898-bc57-4ee1-8800-db469aca5fe3
     m_ActionName: 'Player/Crouch[/Keyboard/c]'
   - m_PersistentCalls:
@@ -280,6 +276,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e6d5bea4-93b9-4eff-b7f2-af37b32da50e
     m_ActionName: 'Player/DropItem[/Keyboard/g]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b108519-1104-47b2-a695-118476c1a306
+    m_ActionName: 'Player/Interact[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -364,8 +364,8 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 4124599060348152041}
   _networkObjectCache: {fileID: 4124599060348152041}
   _bodySR: {fileID: 2354715782175388423}
-  _weaponHolder: {fileID: 6090848408938122296}
-  _currentWeapon: {fileID: 3618844569329543721}
+  _itemHolder: {fileID: 6090848408938122296}
+  _currentEquippable: {fileID: 0}
 --- !u!114 &3861323172350660536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,7 +425,7 @@ MonoBehaviour:
   _componentIndexCache: 4
   _addedNetworkObject: {fileID: 4124599060348152041}
   _networkObjectCache: {fileID: 4124599060348152041}
-  maxHealth: 100
+  _maxHealth: 100
 --- !u!114 &-6593153615482518774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,7 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6090848408938122296}
   m_Layer: 0
-  m_Name: WeaponHolder
+  m_Name: ItemHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -707,17 +707,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3086563621350160368, guid: d19070c065602c74699fba40c733f71d, type: 3}
   m_PrefabInstance: {fileID: 3365342942849208522}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3618844569329543721 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2057210879217777379, guid: d19070c065602c74699fba40c733f71d, type: 3}
-  m_PrefabInstance: {fileID: 3365342942849208522}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3dad3aad1c23c04096633c663ae8fa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.GamePlayerHandsAttack
 --- !u!1001 &6780858859649318689
 PrefabInstance:
   m_ObjectHideFlags: 0

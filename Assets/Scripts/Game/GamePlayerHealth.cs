@@ -1,4 +1,6 @@
+using FishNet.Object;
 using Game.UI;
+using UnityEngine;
 
 namespace Game
 {
@@ -7,13 +9,22 @@ namespace Game
         public override void OnStartServer()
         {
             base.OnStartServer();
-            GameUIManager.Instance.InitializePlayerHealthSlider(maxHealth);
+            GameUIManager.Instance.InitializePlayerHealthSlider(_maxHealth);
         }
 
         public override void OnStartClient()
         {
             base.OnStartClient();
             UpdateHealthUI(_health.Value);
+        }
+
+        [Server]
+        public void Heal(int amount)
+        {
+            if (_health.Value <= 0) 
+                return;
+
+            _health.Value = Mathf.Min(_health.Value + amount, _maxHealth);
         }
 
         private void Awake()
@@ -28,7 +39,7 @@ namespace Game
 
         private void OnHealthChanged(int previous, int next, bool asServer)
         {
-            if (!IsOwner)
+            if (IsOwner == false)
                 return;
 
             UpdateHealthUI(next);

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 268759045536674886}
   - component: {fileID: -9211074332455704512}
   - component: {fileID: 2961845302447923499}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: GameZombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,6 @@ MonoBehaviour:
   - {fileID: 268759045536674886}
   - {fileID: -9211074332455704512}
   - {fileID: 2961845302447923499}
-  - {fileID: 0}
   InitializedParentNetworkBehaviour: {fileID: 0}
   InitializedNestedNetworkObjects: []
   RuntimeParentNetworkBehaviour: {fileID: 0}
@@ -100,7 +99,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584082993950460179
+  _initializedTimestamp: -8584076925184659103
 --- !u!114 &632704518309909292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +270,7 @@ MonoBehaviour:
   _componentIndexCache: 3
   _addedNetworkObject: {fileID: 4124599060348152041}
   _networkObjectCache: {fileID: 4124599060348152041}
-  maxHealth: 10
+  _maxHealth: 100
 --- !u!1 &757035988319561380
 GameObject:
   m_ObjectHideFlags: 0

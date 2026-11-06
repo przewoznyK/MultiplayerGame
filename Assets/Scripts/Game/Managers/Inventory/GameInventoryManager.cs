@@ -7,7 +7,6 @@ namespace Game
     public class GameInventoryManager : Singleton<GameInventoryManager>
     { 
         [SerializeField] private GameInventorySlot[] _slots;
-        [SerializeField] private WeaponController _gamePlayerPrefab;
         private int _activeSlotIndex = -1;
 
         public void UpdateSlot(int slotId, Sprite itemSprite)

@@ -9,7 +9,6 @@ namespace Game
     {
         [SerializeField] private int _damage = 10;
         [SerializeField] private float _attackCooldown = 1.5f;
-        [SerializeField] private LayerMask _enemyLayer;
 
         [Header("ANIMATION")]
         [SerializeField] private Transform _handL;
@@ -59,7 +58,7 @@ namespace Game
             Vector2 size = new Vector2(_radius * 2f, _height);
             float angle = _targetPoint.eulerAngles.z;
 
-            Collider2D[] hitEnemies = Physics2D.OverlapCapsuleAll(_targetPoint.position, size, CapsuleDirection2D.Vertical, angle, _enemyLayer);
+            Collider2D[] hitEnemies = Physics2D.OverlapCapsuleAll(_targetPoint.position, size, CapsuleDirection2D.Vertical, angle, _targetMask);
 
             foreach (Collider2D enemy in hitEnemies)
             {
@@ -68,7 +67,7 @@ namespace Game
             }
         }
 
-        public override void PlayAttackAnimation()
+        public override void PlayPrimaryVisuals()
         {
             if (_isAttacking == false)
                 StartCoroutine(AttackAnimation());

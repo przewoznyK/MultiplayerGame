@@ -15,7 +15,6 @@ namespace Game
         [SerializeField] private Vector2 _pullbackOffset = new Vector2(0f, -0.04f);
         [SerializeField] private Vector2 _forwardOffset = new Vector2(0f, 0.12f);
         [SerializeField] private float _slashAngle = -70f;
-        [SerializeField] private LayerMask _enemyLayer;
 
         private Vector2 _startPosition;
         private Quaternion _startRotation;
@@ -37,7 +36,7 @@ namespace Game
             Vector2 size = new Vector2(radius * 2f, height);
             float angle = targetPoint.eulerAngles.z;
 
-            Collider2D[] hitEnemies = Physics2D.OverlapCapsuleAll(targetPoint.position, size, CapsuleDirection2D.Vertical, angle, _enemyLayer);
+            Collider2D[] hitEnemies = Physics2D.OverlapCapsuleAll(targetPoint.position, size, CapsuleDirection2D.Vertical, angle, _targetMask);
 
             foreach (Collider2D enemy in hitEnemies)
             {
@@ -46,7 +45,7 @@ namespace Game
             }
         }
 
-        public override void PlayAttackAnimation()
+        public override void PlayPrimaryVisuals()
         {
             if (_isAttacking == false)
                 StartCoroutine(AttackAnimation());

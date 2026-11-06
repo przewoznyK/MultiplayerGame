@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 020ed0c3d895f5a4d8669f764eea36db, type: 3}
+  m_Script: {fileID: 11500000, guid: b18585e8b0e10414ca3972d79081bace, type: 3}
   m_Name: Hands
-  m_EditorClassIdentifier: Assembly-CSharp::Game.ItemData
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Data.WeaponData
   ItemID: 0
   ItemName: Hands
   ItemSprite: {fileID: -1624108181874779714, guid: b3568c4f9659e3d4da9f219c7b77a437, type: 3}
-  WeaponVisualPrefab: {fileID: 2057210879217777379, guid: d19070c065602c74699fba40c733f71d, type: 3}
-  MaxStackSize: 1
+  VisualPrefab: {fileID: 2057210879217777379, guid: d19070c065602c74699fba40c733f71d, type: 3}
+  DropPrefab: {fileID: 0}
   Damage: 1
+  AttackSpeed: 0

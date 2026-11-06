@@ -11,10 +11,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 020ed0c3d895f5a4d8669f764eea36db, type: 3}
   m_Name: EmptySlot
-  m_EditorClassIdentifier: Assembly-CSharp::Game.ItemData
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Data.ItemData
   ItemID: -1
   ItemName: EmptySlot
   ItemSprite: {fileID: 1937541935619121077, guid: 0bf4bb3bf5b893147841e2e31c895a90, type: 3}
-  WeaponVisualPrefab: {fileID: 2057210879217777379, guid: d19070c065602c74699fba40c733f71d, type: 3}
-  MaxStackSize: 1
-  Damage: 1
+  VisualPrefab: {fileID: 2057210879217777379, guid: d19070c065602c74699fba40c733f71d, type: 3}
+  DropPrefab: {fileID: 0}

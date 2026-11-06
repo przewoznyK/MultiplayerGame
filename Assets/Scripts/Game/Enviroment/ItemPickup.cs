@@ -1,4 +1,5 @@
 using FishNet.Object;
+using Game.Data;
 using UnityEngine;
 
 namespace Game

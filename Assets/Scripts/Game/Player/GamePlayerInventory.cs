@@ -1,5 +1,6 @@
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using Game.Data;
 using UnityEngine;
 
 namespace Game
@@ -97,6 +98,7 @@ namespace Game
                 Items.Add(-1);
             
             AddItem(1);
+            AddItem(3);
         }
         
         public override void OnStopClient()
@@ -117,7 +119,7 @@ namespace Game
                 return;
             
             ItemData itemData = GameItemsManager.Instance.GetItemById(newItemID);
-            _gamePlayer.UpdateWeapon(itemData);
+            _gamePlayer.UpdateEquippable(itemData);
         }
 
         [Server]
@@ -167,7 +169,7 @@ namespace Game
                 EquippedItemID.Value = -1;
 
             ItemData itemData = GameItemsManager.Instance.GetItemById(EquippedItemID.Value);
-            _gamePlayer.UpdateWeapon(itemData);
+            _gamePlayer.UpdateEquippable(itemData);
         }
 
         [Server]
@@ -184,6 +186,18 @@ namespace Game
             }
 
             return false;
+        }
+
+        [Server]
+        public void ConsumeActiveItem()
+        {
+            int currentSlot = ActiveSlotIndex.Value;
+
+            if (currentSlot >= 0 && currentSlot < Items.Count)
+            {
+                Items[currentSlot] = -1;
+                UpdateServerEquippedState();
+            }
         }
 
         private void OnInventoryChanged(SyncListOperation op, int index, int oldItem, int newItem, bool asServer)
