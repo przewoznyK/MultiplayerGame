@@ -1,4 +1,5 @@
 using Game.Data;
+using UnityEngine;
 
 namespace Game
 {
@@ -6,19 +7,19 @@ namespace Game
     {
         private ConsumableData _consumableData;
 
-        public override void Initialize(ItemData data)
+        public override void Initialize(GamePlayer gamePlayer, ItemData data)
         {
-            base.Initialize(data);
+            base.Initialize(gamePlayer, data);
 
             _consumableData = data as ConsumableData;
         }
 
-        public override void PlayPrimaryVisuals()
+        public override void PlayPrimaryUseVisuals()
         {
-
+            Debug.Log("Cosnuamble animation");
         }
 
-        public override void PerformServerLogic(GamePlayer owner)
+        public override void PerformPrimaryUseLogic(GamePlayer owner)
         {
             if (owner.TryGetComponent(out GamePlayerHealth health))
                 health.Heal(_consumableData.HealAmount);

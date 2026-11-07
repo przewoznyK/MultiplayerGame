@@ -7,6 +7,8 @@ namespace Game
 {
     public class GamePlayer : NetworkBehaviour
     {
+        public Transform LeftHand;
+        public Transform RightHand;
         [SerializeField] private SpriteRenderer _bodySR;
         [SerializeField] private Transform _itemHolder;
         private EquippableController _currentEquippable;
@@ -19,40 +21,90 @@ namespace Game
         public void UpdateEquippable(ItemData itemData)
         {
             if (_currentEquippable != null)
+            {
+                OnCancelPrimaryPressed();
                 Destroy(_currentEquippable.gameObject);
-
-            if (itemData == null || itemData.VisualPrefab == null)
-                return;
+            }
 
             EquippableController spawnedItem = Instantiate(itemData.VisualPrefab, _itemHolder);
-            spawnedItem.Initialize(itemData);
+            spawnedItem.Initialize(this, itemData);
 
             _currentEquippable = spawnedItem;
         }
 
-        public void Attack()
+        public void UsePrimary()
         {
-            if (IsOwner == false || _currentEquippable == null) 
+            if (_currentEquippable == null)
                 return;
 
-            _currentEquippable.PlayPrimaryVisuals();
-            CmdPerformAttack();
+            _currentEquippable.PlayPrimaryUseVisuals();
+            CmdUsePrimary();
+        }
+
+        public void ReleasePrimary()
+        {
+            if (_currentEquippable == null)
+                return;
+
+            _currentEquippable.PlayPrimaryReleaseVisuals();
+            CmdReleasePrimary();
         }
 
         [ServerRpc]
-        private void CmdPerformAttack()
+        private void CmdUsePrimary()
         {
             if (_currentEquippable != null)
-                _currentEquippable.PerformServerLogic(this);
+                _currentEquippable.PerformPrimaryUseLogic(this);
 
-            RpcPlayAttackAnimation();
+            RpcPlayPrimaryUseVisuals();
         }
 
         [ObserversRpc(ExcludeOwner = true)]
-        private void RpcPlayAttackAnimation()
+        private void RpcPlayPrimaryUseVisuals()
         {
             if (_currentEquippable != null)
-                _currentEquippable.PlayPrimaryVisuals();
+                _currentEquippable.PlayPrimaryUseVisuals();
+        }
+
+        [ServerRpc]
+        private void CmdReleasePrimary()
+        {
+            if (_currentEquippable != null)
+                _currentEquippable.PerformPrimaryReleaseLogic(this);
+
+            RpcPlayPrimaryReleaseVisuals();
+        }
+
+        [ObserversRpc(ExcludeOwner = true)]
+        private void RpcPlayPrimaryReleaseVisuals()
+        {
+            if (_currentEquippable != null)
+                _currentEquippable.PlayPrimaryReleaseVisuals();
+        }
+
+        public void OnCancelPrimaryPressed()
+        {
+            if (_currentEquippable == null) 
+                return;
+
+            _currentEquippable.PlayPrimaryCancelVisuals();
+            CmdCancelPrimary();
+        }
+
+        [ServerRpc]
+        private void CmdCancelPrimary()
+        {
+            if (_currentEquippable != null)
+                _currentEquippable.PerformPrimaryCancelLogic(this);
+
+            RpcPlayPrimaryCancelVisuals();
+        }
+
+        [ObserversRpc(ExcludeOwner = true)]
+        private void RpcPlayPrimaryCancelVisuals()
+        {
+            if (_currentEquippable != null)
+                _currentEquippable.PlayPrimaryCancelVisuals();
         }
     }
 }

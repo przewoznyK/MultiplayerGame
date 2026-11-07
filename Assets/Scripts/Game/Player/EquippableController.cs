@@ -5,14 +5,20 @@ namespace Game
 {
     public abstract class EquippableController : MonoBehaviour
     {
-        protected ItemData BaseItemData;
+        protected GamePlayer _player;
+        protected ItemData _baseItemData;
 
-        public virtual void Initialize(ItemData data)
+        public virtual void Initialize(GamePlayer gamePlayer, ItemData data)
         {
-            BaseItemData = data;
+            _player = gamePlayer;
+            _baseItemData = data;
         }
 
-        public abstract void PlayPrimaryVisuals();
-        public abstract void PerformServerLogic(GamePlayer owner);
+        public abstract void PlayPrimaryUseVisuals();
+        public abstract void PerformPrimaryUseLogic(GamePlayer owner);
+        public virtual void PlayPrimaryReleaseVisuals() { }
+        public virtual void PerformPrimaryReleaseLogic(GamePlayer owner) { }
+        public virtual void PlayPrimaryCancelVisuals() { }
+        public virtual void PerformPrimaryCancelLogic(GamePlayer owner) { }
     }
 }

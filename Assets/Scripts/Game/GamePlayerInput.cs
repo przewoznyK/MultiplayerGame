@@ -9,7 +9,8 @@ namespace Game
     {
         [SerializeField] private InputActionReference _lookAction;
         [SerializeField] private InputActionReference _moveAction;
-        [SerializeField] private InputActionReference _attackAction;
+        [SerializeField] private InputActionReference _primaryAction;
+        [SerializeField] private InputActionReference _secondaryAction;
         [SerializeField] private InputActionReference _slotChangeAction;
         [SerializeField] private InputActionReference _scrollAction;
         [SerializeField] private InputActionReference _dropItemAction;
@@ -31,7 +32,9 @@ namespace Game
             {
                 _moveAction.action.performed += OnMovePerformed;
                 _moveAction.action.canceled += OnMoveCanceled;
-                _attackAction.action.performed += OnAttackPerformed;
+                _primaryAction.action.started += OnPrimaryPressed;
+                _primaryAction.action.canceled += OnPrimaryReleased;
+                _secondaryAction.action.performed += OnSecondaryPerformed;
                 _scrollAction.action.performed += OnScrollPerformed;
                 _slotChangeAction.action.performed += OnSlotChangePerformed;
                 _dropItemAction.action.performed += OnDropItemPerformed;
@@ -39,7 +42,7 @@ namespace Game
 
                 _moveAction.action.Enable();
                 _lookAction.action.Enable();
-                _attackAction.action.Enable();
+                _primaryAction.action.Enable();
                 _scrollAction.action.Enable();
                 _slotChangeAction.action.Enable();
                 _dropItemAction.action.Enable();
@@ -57,7 +60,9 @@ namespace Game
 
                 _moveAction.action.performed -= OnMovePerformed;
                 _moveAction.action.canceled -= OnMoveCanceled;
-                _attackAction.action.performed -= OnAttackPerformed;
+                _primaryAction.action.performed -= OnPrimaryPressed;
+                _primaryAction.action.canceled -= OnPrimaryReleased;
+                _secondaryAction.action.performed -= OnSecondaryPerformed;
                 _scrollAction.action.performed -= OnScrollPerformed;
                 _slotChangeAction.action.performed -= OnSlotChangePerformed;
                 _dropItemAction.action.performed -= OnDropItemPerformed;
@@ -65,7 +70,7 @@ namespace Game
 
                 _moveAction.action.Disable();
                 _lookAction.action.Disable();
-                _attackAction.action.Disable();
+                _primaryAction.action.Disable();
                 _scrollAction.action.Disable();
                 _slotChangeAction.action.Disable();
                 _dropItemAction.action.Disable();
@@ -81,8 +86,14 @@ namespace Game
         private void OnMoveCanceled(InputAction.CallbackContext context) =>
             _moveInput = Vector2.zero;
 
-        private void OnAttackPerformed(InputAction.CallbackContext _) =>
-            _gamePlayer.Attack();
+        private void OnPrimaryPressed(InputAction.CallbackContext _) =>
+            _gamePlayer.UsePrimary();
+
+        private void OnPrimaryReleased(InputAction.CallbackContext _) =>
+            _gamePlayer.ReleasePrimary();
+
+        private void OnSecondaryPerformed(InputAction.CallbackContext _) =>
+            _gamePlayer.OnCancelPrimaryPressed();
 
         private void OnSlotChangePerformed(InputAction.CallbackContext ctx)
         {
@@ -108,7 +119,7 @@ namespace Game
 
         private void OnTick()
         {
-            if (!IsOwner)
+            if (IsOwner == false)
                 return;
 
             _gamePlayerMovement.MovePlayer(_moveInput);

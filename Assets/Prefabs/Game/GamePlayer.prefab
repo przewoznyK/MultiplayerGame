@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: -6593153615482518774}
   - component: {fileID: 3991396208232916789}
   - component: {fileID: 3985969609236638999}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GamePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584077835767332819
+  _initializedTimestamp: -8584076084716880981
 --- !u!114 &632704518309909292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +280,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9b108519-1104-47b2-a695-118476c1a306
     m_ActionName: 'Player/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 656d4207-b275-4b5a-a9e6-035d3720dd93
+    m_ActionName: 'Player/Secondary[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -363,9 +367,10 @@ MonoBehaviour:
   _componentIndexCache: 1
   _addedNetworkObject: {fileID: 4124599060348152041}
   _networkObjectCache: {fileID: 4124599060348152041}
+  LeftHand: {fileID: 5593352049827718299}
+  RightHand: {fileID: 4190052488819756216}
   _bodySR: {fileID: 2354715782175388423}
   _itemHolder: {fileID: 6090848408938122296}
-  _currentEquippable: {fileID: 0}
 --- !u!114 &3861323172350660536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,7 +388,8 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 4124599060348152041}
   _lookAction: {fileID: -5630151704836100654, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _attackAction: {fileID: 1120369429361536294, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _primaryAction: {fileID: 1120369429361536294, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _secondaryAction: {fileID: -2977191811701172011, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _slotChangeAction: {fileID: 1435534842799140940, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _scrollAction: {fileID: 6240969308177333660, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _dropItemAction: {fileID: -2786627028963279606, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -705,6 +711,16 @@ PrefabInstance:
 --- !u!4 &315732262339290938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3086563621350160368, guid: d19070c065602c74699fba40c733f71d, type: 3}
+  m_PrefabInstance: {fileID: 3365342942849208522}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4190052488819756216 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1482272630306430066, guid: d19070c065602c74699fba40c733f71d, type: 3}
+  m_PrefabInstance: {fileID: 3365342942849208522}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5593352049827718299 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7145960945885000785, guid: d19070c065602c74699fba40c733f71d, type: 3}
   m_PrefabInstance: {fileID: 3365342942849208522}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6780858859649318689

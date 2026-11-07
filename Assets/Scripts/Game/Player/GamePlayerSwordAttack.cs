@@ -1,4 +1,4 @@
-using FishNet.Object;
+using Game.Data;
 using System.Collections;
 using UnityEngine;
 
@@ -18,34 +18,36 @@ namespace Game
 
         private Vector2 _startPosition;
         private Quaternion _startRotation;
-        private bool _isAttacking;
-        private int _damage = 10;
 
-        private void Awake()
+        public override void Initialize(GamePlayer gamePlayer, ItemData data)
         {
+            _damage = (data as WeaponData).Damage;
+
             _attackPivot = transform.parent;
             _startPosition = _attackPivot.localPosition;
             _startRotation = _attackPivot.localRotation;
         }
 
-        public override void PerformServerLogic(GamePlayer owner)
+        public override void PerformPrimaryUseLogic(GamePlayer owner)
         {
-            if (targetPoint == null)
+            if (_attackPivot == null)
                 return;
 
             Vector2 size = new Vector2(radius * 2f, height);
-            float angle = targetPoint.eulerAngles.z;
+            float angle = _attackPivot.eulerAngles.z;
 
-            Collider2D[] hitEnemies = Physics2D.OverlapCapsuleAll(targetPoint.position, size, CapsuleDirection2D.Vertical, angle, _targetMask);
-
+            Collider2D[] hitEnemies = Physics2D.OverlapCapsuleAll(_attackPivot.position, size, CapsuleDirection2D.Vertical, angle, _targetMask);
             foreach (Collider2D enemy in hitEnemies)
             {
+                if (enemy.gameObject == owner.gameObject)
+                    continue;
+
                 if (enemy.TryGetComponent(out Health enemyHealth))
                     enemyHealth.TakeDamage(_damage);
             }
         }
 
-        public override void PlayPrimaryVisuals()
+        public override void PlayPrimaryUseVisuals()
         {
             if (_isAttacking == false)
                 StartCoroutine(AttackAnimation());

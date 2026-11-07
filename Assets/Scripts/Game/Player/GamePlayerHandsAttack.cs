@@ -7,7 +7,6 @@ namespace Game
 {
     public class GamePlayerHandsAttack : WeaponController
     {
-        [SerializeField] private int _damage = 10;
         [SerializeField] private float _attackCooldown = 1.5f;
 
         [Header("ANIMATION")]
@@ -32,7 +31,6 @@ namespace Game
         private Vector2 _rightStartPosition;
         private Quaternion _leftStartRotation;
         private Quaternion _rightStartRotation; 
-        private bool _isAttacking;
         private bool _nextLeftHand = true;
 
         private void Awake()
@@ -50,7 +48,7 @@ namespace Game
             }
         }
 
-        public override void PerformServerLogic(GamePlayer owner)
+        public override void PerformPrimaryUseLogic(GamePlayer owner)
         {
             if (_targetPoint == null)
                 return;
@@ -67,7 +65,7 @@ namespace Game
             }
         }
 
-        public override void PlayPrimaryVisuals()
+        public override void PlayPrimaryUseVisuals()
         {
             if (_isAttacking == false)
                 StartCoroutine(AttackAnimation());

@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b18585e8b0e10414ca3972d79081bace, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e421d80f50044447b613cd1e7ce7280, type: 3}
   m_Name: Bow
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Data.WeaponData
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Data.RangeWeaponData
   ItemID: 2
   ItemName: Bow
   ItemSprite: {fileID: -7856493677412862020, guid: 0a10a8437a54a0643bd2918ab96eeb9d, type: 3}
-  VisualPrefab: {fileID: 0}
+  VisualPrefab: {fileID: 1781370925878031097, guid: fd47fbfea711fcb4ba3a236aff0198cc, type: 3}
   DropPrefab: {fileID: 0}
-  Damage: 0
-  AttackSpeed: 0
+  Damage: 5
+  AttackSpeed: 2
+  MinProjectileSpeed: 1
+  MaxProjectileSpeed: 10
