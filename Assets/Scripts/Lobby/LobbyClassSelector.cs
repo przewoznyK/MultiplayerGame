@@ -1,4 +1,6 @@
 using Global;
+using Global.Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,8 @@ namespace Lobby
     public class LobbyClassSelector : MonoBehaviour
     {
         [SerializeField] private Image _classImage;
+        [SerializeField] private TextMeshProUGUI _classNameText;
+        [SerializeField] private TextMeshProUGUI _classBuffText;
         [SerializeField] private Button _leftButton;
         [SerializeField] private Button _rightButton;
         private PlayerLobby _targetPlayer;
@@ -20,8 +24,8 @@ namespace Lobby
                 _leftButton.gameObject.SetActive(true);
                 _rightButton.gameObject.SetActive(true);
 
-                _leftButton.onClick.AddListener(() => _targetPlayer.CmdChangeClass(-1, SpriteManager.Instance.GetClassCount()));
-                _rightButton.onClick.AddListener(() => _targetPlayer.CmdChangeClass(1, SpriteManager.Instance.GetClassCount()));
+                _leftButton.onClick.AddListener(() => _targetPlayer.CmdChangeClass(-1, PlayerClassManager.Instance.GetClassCount()));
+                _rightButton.onClick.AddListener(() => _targetPlayer.CmdChangeClass(1, PlayerClassManager.Instance.GetClassCount()));
             }
             else
             {
@@ -46,7 +50,14 @@ namespace Lobby
 
         private void UpdateClassVisual(int index)
         {
-            _classImage.sprite = SpriteManager.Instance.GetClassSpriteById(index);
+            PlayerClassData classData = PlayerClassManager.Instance.GetClassById(index);
+
+            if (classData != null)
+            {
+                _classImage.sprite = classData.ClassSprite;
+                _classNameText.text = classData.ClassType.ToString();
+                _classBuffText.text = classData.ClassBuffDescription;
+            }
         }
     }
 }

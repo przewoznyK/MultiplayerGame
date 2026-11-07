@@ -1,3 +1,4 @@
+using Global.Enums;
 using UnityEngine;
 
 namespace Game.Data
@@ -6,6 +7,7 @@ namespace Game.Data
     public class WeaponData : ItemData
     {
         [Header("WEAPON STATS")]
+        public WeaponType WeaponType;
         public int Damage;
         public float AttackSpeed;
     }

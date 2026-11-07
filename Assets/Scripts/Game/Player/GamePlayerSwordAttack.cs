@@ -19,9 +19,11 @@ namespace Game
         private Vector2 _startPosition;
         private Quaternion _startRotation;
 
+        private WeaponData _weaponData;
+
         public override void Initialize(GamePlayer gamePlayer, ItemData data)
         {
-            _damage = (data as WeaponData).Damage;
+            _weaponData = data as WeaponData;
 
             _attackPivot = transform.parent;
             _startPosition = _attackPivot.localPosition;
@@ -30,9 +32,7 @@ namespace Game
 
         public override void PerformPrimaryUseLogic(GamePlayer owner)
         {
-            if (_attackPivot == null)
-                return;
-
+            int finalDamage = owner.GamePlayerStats.GetTotalDamage(_weaponData.Damage, _weaponData.WeaponType);
             Vector2 size = new Vector2(radius * 2f, height);
             float angle = _attackPivot.eulerAngles.z;
 
@@ -43,7 +43,7 @@ namespace Game
                     continue;
 
                 if (enemy.TryGetComponent(out Health enemyHealth))
-                    enemyHealth.TakeDamage(_damage);
+                    enemyHealth.TakeDamage(finalDamage);
             }
         }
 

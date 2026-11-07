@@ -16,7 +16,8 @@ MonoBehaviour:
   ItemName: Bow
   ItemSprite: {fileID: -7856493677412862020, guid: 0a10a8437a54a0643bd2918ab96eeb9d, type: 3}
   VisualPrefab: {fileID: 1781370925878031097, guid: fd47fbfea711fcb4ba3a236aff0198cc, type: 3}
-  DropPrefab: {fileID: 0}
+  DropPrefab: {fileID: 7069028042929785331, guid: 73bdeb14cad02c34488c29d349e35b09, type: 3}
+  WeaponType: 2
   Damage: 5
   AttackSpeed: 2
   MinProjectileSpeed: 1

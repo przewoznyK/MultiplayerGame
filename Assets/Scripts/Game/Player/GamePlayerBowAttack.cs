@@ -1,5 +1,6 @@
 using Core;
 using Game.Data;
+using Global.Enums;
 using System.Collections;
 using UnityEngine;
 
@@ -26,19 +27,16 @@ namespace Game
         private GamePlayer _gamePlayer;
         private GameObject _fakeArrowInstance;
         private Transform _attackPivot;
-        private float _minArrowSpeed;
-        private float _maxArrowSpeed;
+        private RangeWeaponData _rangeData;
         private float _serverChargeStartTime;
         private bool _isCancelledLocal = false;
-
+        
         public override void Initialize(GamePlayer gamePlayer, ItemData data)
         {
-            if(data is RangeWeaponData rangeData)
-            {
-                _minArrowSpeed = rangeData.MinProjectileSpeed;
-                _maxArrowSpeed = rangeData.MaxProjectileSpeed;
-                _damage = rangeData.Damage;
-            }
+            _gamePlayer = gamePlayer;
+
+            if (data is RangeWeaponData rangeData)
+                _rangeData = data as RangeWeaponData;
             else
                 Debug.LogError("Provided ItemData is not of type RangeWeaponData.");
 
@@ -60,15 +58,18 @@ namespace Game
 
         public override void PerformPrimaryReleaseLogic(GamePlayer owner)
         {
-            if (_serverChargeStartTime == 0f) 
+            if (_serverChargeStartTime == 0f)
                 return;
 
+            int finalDamage = owner.GamePlayerStats.GetTotalDamage(_rangeData.Damage, WeaponType.Bow);
+            float finalMaxSpeed = owner.GamePlayerStats.GetTotalMaxArrowSpeed(_rangeData.MaxProjectileSpeed);
             float chargeTime = Time.time - _serverChargeStartTime;
             float chargeRatio = Mathf.Clamp01(chargeTime / _maxDrawTime);
-            float finalSpeed = Mathf.Lerp(_minArrowSpeed, _maxArrowSpeed, chargeRatio);
+            float finalSpeed = Mathf.Lerp(_rangeData.MinProjectileSpeed, finalMaxSpeed, chargeRatio);
 
             ArrowProjectile projectile = owner.NetworkManager.GetPooledInstantiated<ArrowProjectile>(_visualArrowPrefab, _arrowSpawnPoint.position, GetArrowRotation(), true);
-            projectile.Initialize(_damage, finalSpeed, owner.gameObject);
+
+            projectile.Initialize(finalDamage, finalSpeed, owner.gameObject);
             owner.ServerManager.Spawn(projectile.NetworkObject);
 
             _serverChargeStartTime = 0f;

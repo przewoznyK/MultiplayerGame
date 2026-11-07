@@ -16,6 +16,6 @@ MonoBehaviour:
   ItemName: Health Potion
   ItemSprite: {fileID: 2476417197399195537, guid: 47890234700d78446afe52f98b5502ee, type: 3}
   VisualPrefab: {fileID: -6613885199369530293, guid: 66d07c16d2b6fc44386f6255843119be, type: 3}
-  DropPrefab: {fileID: 0}
+  DropPrefab: {fileID: 8791408524030074236, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
   HealAmount: 25
   ConsumeTime: 2

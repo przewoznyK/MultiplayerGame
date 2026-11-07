@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4149214495303448738}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.495708, w: 0.86848927}
-  m_LocalPosition: {x: -0.082, y: -0.588, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -59.433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &640524319377203035
 SpriteRenderer:
   serializedVersion: 2
@@ -124,7 +124,7 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 8
+  <PrefabId>k__BackingField: 10
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 9190369692548429748
   SceneId: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584077810494712451
+  _initializedTimestamp: -8584075234602989678
 --- !u!61 &4424974664398874067
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -213,4 +213,4 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 6486129970257079897}
   _networkObjectCache: {fileID: 6486129970257079897}
-  ItemData: {fileID: 11400000, guid: 56ae82b637275f64e91c70837311e581, type: 2}
+  ItemData: {fileID: 11400000, guid: b326db5a4a5458446a04807d5f90854b, type: 2}

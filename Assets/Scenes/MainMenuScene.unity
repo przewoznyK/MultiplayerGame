@@ -334,6 +334,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &307867747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307867749}
+  - component: {fileID: 307867748}
+  m_Layer: 0
+  m_Name: PlayerClassManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &307867748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307867747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5c33c58a2599b409349ddd1c4d01ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Global.Managers.PlayerClassManager
+  _classDatabase: {fileID: 11400000, guid: fdb2fc8a35e84a94681c0d97e1aa18bb, type: 2}
+--- !u!4 &307867749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307867747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &312995691
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,9 +517,6 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 0e0d50b4fc53a044da915293a2164592, type: 3}
   - Name: RangeIcon
     Sprite: {fileID: 21300000, guid: 805eeda5bfd52e044ad570c1dacc61bb, type: 3}
-  _classSprites:
-  - {fileID: 21300000, guid: 0e0d50b4fc53a044da915293a2164592, type: 3}
-  - {fileID: 21300000, guid: 805eeda5bfd52e044ad570c1dacc61bb, type: 3}
 --- !u!4 &354916237
 Transform:
   m_ObjectHideFlags: 0
@@ -2849,6 +2891,71 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1001 &8507244780719861031
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679201892621921184, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905210028014281246, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: SceneId
+      value: 3757443534
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905210028014281246, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: WasActiveDuringEdit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791408524030074236, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+      propertyPath: m_Name
+      value: DropHealthPotion
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
 --- !u!212 &8943675936432838672
 SpriteRenderer:
   serializedVersion: 2
@@ -2979,3 +3086,5 @@ SceneRoots:
   - {fileID: 2376866272553428798}
   - {fileID: 6206511800376376758}
   - {fileID: 808623221}
+  - {fileID: 307867749}
+  - {fileID: 8507244780719861031}

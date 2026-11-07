@@ -124,14 +124,14 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 8
+  <PrefabId>k__BackingField: 9
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 8678936241477110750
   SceneId: 0
   SerializedTransformProperties:
-    Position: {x: 370.375, y: 25, z: 0}
-    Rotation: {x: 0, y: 0, z: -0.4957087, w: 0.8684889}
-    Scale: {x: 3, y: 3, z: 3}
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0, w: 1}
+    Scale: {x: 1, y: 1, z: 1}
     IsValid: 1
   <IsNested>k__BackingField: 0
   WasActiveDuringEdit: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584077001299831030
+  _initializedTimestamp: -8584075234602989678
 --- !u!61 &952326176185471668
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -213,5 +213,6 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 4847304116148973802}
   _networkObjectCache: {fileID: 4847304116148973802}
-  _possibleItemIds:
-  - {fileID: 11400000, guid: 56ae82b637275f64e91c70837311e581, type: 2}
+  _itemsToDrop:
+  - {fileID: 11400000, guid: b326db5a4a5458446a04807d5f90854b, type: 2}
+  - {fileID: 11400000, guid: 3b82ab25fe6ed3a40a1650fe11ee6fba, type: 2}

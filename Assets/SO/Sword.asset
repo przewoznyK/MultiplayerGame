@@ -15,7 +15,8 @@ MonoBehaviour:
   ItemID: 1
   ItemName: Sword
   ItemSprite: {fileID: 712035800519618848, guid: c851c6466747eca469379670569cac03, type: 3}
-  DropPrefab: {fileID: 4149214495303448738, guid: ddf80d369ab158541abcca745d4273be, type: 3}
   VisualPrefab: {fileID: 3835502411579342448, guid: e2169553dc793ec48947f21abab21a11, type: 3}
+  DropPrefab: {fileID: 4149214495303448738, guid: ddf80d369ab158541abcca745d4273be, type: 3}
+  WeaponType: 1
   Damage: 1
   AttackSpeed: 1

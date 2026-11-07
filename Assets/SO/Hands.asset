@@ -15,7 +15,8 @@ MonoBehaviour:
   ItemID: 0
   ItemName: Hands
   ItemSprite: {fileID: -1624108181874779714, guid: b3568c4f9659e3d4da9f219c7b77a437, type: 3}
-  VisualPrefab: {fileID: 2057210879217777379, guid: d19070c065602c74699fba40c733f71d, type: 3}
+  VisualPrefab: {fileID: 0}
   DropPrefab: {fileID: 0}
+  WeaponType: 0
   Damage: 1
   AttackSpeed: 0

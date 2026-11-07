@@ -14,7 +14,6 @@ namespace Global
         }
 
         [SerializeField] private SpriteData[] _spriteDatabase;
-        [SerializeField] private Sprite[] _classSprites;
 
         private readonly Dictionary<string, Sprite> _spriteDictionary = new Dictionary<string, Sprite>();
 
@@ -36,20 +35,6 @@ namespace Global
 
             Debug.LogError($"SpriteManager: Sprite name doesn't exist '{spriteName}'!");
             return null;
-        }
-
-        public Sprite GetClassSpriteById(int classId)
-        {
-            if (classId >= 0 && classId < _classSprites.Length)
-                return _classSprites[classId];
-
-            Debug.LogError($"SpriteManager: Invalid class ID '{classId}'!");
-            return null;
-        }
-
-        public int GetClassCount()
-        {
-            return _classSprites.Length;
         }
     }
 }

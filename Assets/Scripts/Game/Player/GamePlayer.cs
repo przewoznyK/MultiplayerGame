@@ -1,29 +1,66 @@
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using Game.Data;
 using Global;
+using Global.Managers;
 using UnityEngine;
 
 namespace Game
 {
     public class GamePlayer : NetworkBehaviour
     {
+        public GamePlayerStats GamePlayerStats;
         public Transform LeftHand;
         public Transform RightHand;
+        [SerializeField] private EquippableController _defaultHands;
         [SerializeField] private SpriteRenderer _bodySR;
         [SerializeField] private Transform _itemHolder;
         private EquippableController _currentEquippable;
+        public readonly SyncVar<int> NetworkClassIndex = new SyncVar<int>(0);
+
+        private void Awake()
+        {
+            NetworkClassIndex.OnChange += OnClassIndexChanged;
+        }
 
         public void Initialize(int classIndex)
         {
-            _bodySR.sprite = SpriteManager.Instance.GetClassSpriteById(classIndex);
+            NetworkClassIndex.Value = classIndex;
+            ApplyClassData(classIndex);
+        }
+
+        private void OnClassIndexChanged(int prevIndex, int newIndex, bool asServer)
+        {
+            if (asServer == false)
+                ApplyClassData(newIndex);
+        }
+
+        private void ApplyClassData(int index)
+        {
+            PlayerClassData classData = PlayerClassManager.Instance.GetClassById(index);
+
+            if (classData != null)
+            {
+                GamePlayerStats.Initialize(classData);
+                _bodySR.sprite = classData.ClassSprite;
+            }
         }
 
         public void UpdateEquippable(ItemData itemData)
         {
             if (_currentEquippable != null)
             {
-                OnCancelPrimaryPressed();
-                Destroy(_currentEquippable.gameObject);
+                if(IsOwner)
+                    OnCancelPrimaryPressed();
+                
+                if(_currentEquippable != _defaultHands)
+                    Destroy(_currentEquippable.gameObject);
+            }
+
+            if(itemData.VisualPrefab == null)
+            {
+                _currentEquippable = _defaultHands;
+                return;
             }
 
             EquippableController spawnedItem = Instantiate(itemData.VisualPrefab, _itemHolder);

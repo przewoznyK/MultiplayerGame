@@ -15,5 +15,5 @@ MonoBehaviour:
   ItemID: -1
   ItemName: EmptySlot
   ItemSprite: {fileID: 1937541935619121077, guid: 0bf4bb3bf5b893147841e2e31c895a90, type: 3}
-  VisualPrefab: {fileID: 2057210879217777379, guid: d19070c065602c74699fba40c733f71d, type: 3}
+  VisualPrefab: {fileID: 0}
   DropPrefab: {fileID: 0}
