@@ -1,4 +1,5 @@
 using FishNet;
+using FishNet.Managing.Scened;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using Steamworks;
@@ -52,19 +53,21 @@ namespace Lobby
 
             if (LobbyController.Instance != null)
                 LobbyController.Instance.UpdatePlayerList();
+
+            InstanceFinder.SceneManager.OnLoadEnd -= OnSceneLoaded;
         }
 
         public override void OnStartClient()
         {
             base.OnStartClient();
 
-            if (!LobbyPlayerSpawnManager.Instance.GamePlayers.Contains(this))
+            if (LobbyPlayerSpawnManager.Instance.GamePlayers.Contains(this) == false)
                 LobbyPlayerSpawnManager.Instance.GamePlayers.Add(this);
 
             LobbyController.Instance.UpdateLobbyName();
             LobbyController.Instance.UpdatePlayerList();
 
-            if (base.IsOwner)
+            if (IsOwner)
             {
                 ServerSetPlayerName(SteamFriends.GetPersonaName());
                 gameObject.name = "LocalGamePlayer";
@@ -73,6 +76,26 @@ namespace Lobby
 
             if (InstanceFinder.IsHostStarted)
                 LobbyController.Instance.SetIsOwner();
+
+            InstanceFinder.SceneManager.OnLoadEnd += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(SceneLoadEndEventArgs args)
+        {
+            if (args.QueueData.AsServer)
+                return;
+
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == SceneTransitionManager.Instance.LobbySceneName)
+            {
+                if (IsOwner)
+                {
+                    LobbyController.Instance.UpdateLobbyName();
+                    LobbyController.Instance.UpdatePlayerList();
+
+                    if (InstanceFinder.IsHostStarted)
+                        LobbyController.Instance.SetIsOwner();
+                }
+            }
         }
     }
 }

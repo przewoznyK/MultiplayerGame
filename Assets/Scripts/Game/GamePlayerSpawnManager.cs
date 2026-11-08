@@ -1,6 +1,6 @@
 using Core;
 using FishNet.Connection;
-using FishNet.Object;
+using Game.Managers;
 using Lobby;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,17 +28,16 @@ namespace Game
             if (sessionData != null)
                 playerClassIndex = sessionData.ClassIndex.Value;
             else
-            {
                 Debug.LogWarning($"Missing lobby data for connection {conn.ClientId}. Defaulting to class 0.");
-            }
 
             GamePlayer player = Instantiate(_gamePlayerPrefab, spawnPoint.position, spawnPoint.rotation);
             player.Initialize(playerClassIndex);
 
             Spawn(player.gameObject, conn, gameObject.scene);
+            GameManager.Instance.PlayerJoined();
             GamePlayers.Add(player);
 
-            if (!_zombieSpawned)
+            if (_zombieSpawned == false)
                 StartCoroutine(SpawnZombieAfterDelay());
         }
 

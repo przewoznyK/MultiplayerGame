@@ -1,5 +1,6 @@
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using Game.Managers;
 using UnityEngine;
 
 namespace Game
@@ -7,7 +8,9 @@ namespace Game
     public class Health : NetworkBehaviour
     {
         [SerializeField] protected int _maxHealth = 100;
-        protected readonly SyncVar<int> _health = new SyncVar<int>(100);
+        protected readonly SyncVar<int> _health = new SyncVar<int>();
+        public readonly SyncVar<bool> IsDead = new SyncVar<bool>(false);
+        protected GamePlayer _lastAttacker;
 
         public override void OnStartServer()
         {
@@ -15,17 +18,23 @@ namespace Game
             _health.Value = _maxHealth;
         }
 
-        public void TakeDamage(int damage)
+        [Server]
+        public void TakeDamage(int amount, GamePlayer attacker = null)
         {
-            _health.Value = Mathf.Max(0, _health.Value - damage);
+            if (IsDead.Value) 
+               return;
+
+            _health.Value -= amount;
+            _lastAttacker = attacker;
 
             if (_health.Value <= 0)
                 Die();
         }
 
-        private void Die()
+        [Server]
+        protected virtual void Die()
         {
-            NetworkObject.Despawn();
+            IsDead.Value = true;
         }
     }
 }

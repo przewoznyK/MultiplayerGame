@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2674681186620786961}
   - component: {fileID: 268759045536674886}
   - component: {fileID: -9211074332455704512}
-  - component: {fileID: 2961845302447923499}
+  - component: {fileID: 4871742257859442571}
   m_Layer: 8
   m_Name: GameZombie
   m_TagString: Untagged
@@ -88,7 +88,7 @@ MonoBehaviour:
   - {fileID: 632704518309909292}
   - {fileID: 268759045536674886}
   - {fileID: -9211074332455704512}
-  - {fileID: 2961845302447923499}
+  - {fileID: 0}
   InitializedParentNetworkBehaviour: {fileID: 0}
   InitializedNestedNetworkObjects: []
   RuntimeParentNetworkBehaviour: {fileID: 0}
@@ -99,7 +99,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584076925184659103
+  _initializedTimestamp: -8584074721758900059
 --- !u!114 &632704518309909292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
   _rotationSpeed: 360
   _detectionRange: 10
   _rb: {fileID: 3692185500897712075}
---- !u!114 &2961845302447923499
+--- !u!114 &4871742257859442571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -264,13 +264,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 214823025463186888}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 243d890d69d49d44cb8f1daf8149a4ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 14759c6359b59b3438e7a17244c9371b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Health
-  _componentIndexCache: 3
+  m_EditorClassIdentifier: Assembly-CSharp::Game.ZombieHealth
+  _componentIndexCache: 255
   _addedNetworkObject: {fileID: 4124599060348152041}
-  _networkObjectCache: {fileID: 4124599060348152041}
+  _networkObjectCache: {fileID: 0}
   _maxHealth: 100
+  IsDead: 0
 --- !u!1 &757035988319561380
 GameObject:
   m_ObjectHideFlags: 0

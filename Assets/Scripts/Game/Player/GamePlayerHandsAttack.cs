@@ -61,7 +61,7 @@ namespace Game
             foreach (Collider2D enemy in hitEnemies)
             {
                 if (enemy.TryGetComponent(out Health enemyHealth))
-                    enemyHealth.TakeDamage(_damage);
+                    enemyHealth.TakeDamage(_damage, owner);
             }
         }
 

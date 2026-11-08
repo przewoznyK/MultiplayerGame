@@ -1,6 +1,9 @@
+using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using Game.Data;
+using Game.Managers;
+using Game.UI;
 using Global;
 using Global.Managers;
 using UnityEngine;
@@ -12,16 +15,64 @@ namespace Game
         public GamePlayerStats GamePlayerStats;
         public Transform LeftHand;
         public Transform RightHand;
+        public GamePlayerHealth GamePlayerHealth;
         [SerializeField] private EquippableController _defaultHands;
         [SerializeField] private SpriteRenderer _bodySR;
         [SerializeField] private Transform _itemHolder;
         private EquippableController _currentEquippable;
+
         public readonly SyncVar<int> NetworkClassIndex = new SyncVar<int>(0);
+        public readonly SyncVar<int> PlayerKills = new SyncVar<int>(0);
+        public readonly SyncVar<int> ZombieKills = new SyncVar<int>(0);
 
         private void Awake()
         {
+            GamePlayerHealth.Initialize(this);
             NetworkClassIndex.OnChange += OnClassIndexChanged;
+            PlayerKills.OnChange += OnPlayerKillsChanged;
+            ZombieKills.OnChange += OnZombieKillsChanged;
         }
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            GameUIManager.Instance.AssignLocalPlayer(this);
+        }
+
+        public override void OnStopServer()
+        {
+            base.OnStopServer();
+
+            if (GamePlayerHealth.IsDead.Value == false)
+            {
+                GamePlayerSpawnManager.Instance.GamePlayers.Remove(this);
+                GameManager.Instance.PlayerDisconnected(true);
+            }
+        }
+
+        private void OnPlayerKillsChanged(int prev, int next, bool asServer)
+        {
+            if (asServer == false && IsOwner)
+                GameUIManager.Instance.UpdatePlayerKills(next);
+        }
+
+        private void OnZombieKillsChanged(int prev, int next, bool asServer)
+        {
+            if (asServer == false && IsOwner)
+                GameUIManager.Instance.UpdateZombieKills(next);
+        }
+
+        [Server]
+        public void AddPlayerKill() 
+        {
+            PlayerKills.Value++;
+        }
+
+        [Server]
+        public void AddZombieKill()
+        {
+            ZombieKills.Value++;
+        }    
 
         public void Initialize(int classIndex)
         {
@@ -142,6 +193,12 @@ namespace Game
         {
             if (_currentEquippable != null)
                 _currentEquippable.PlayPrimaryCancelVisuals();
+        }
+
+        [TargetRpc]
+        public void TargetMatchWon(NetworkConnection conn, int alivePlayers, int pKills, int zKills, int time)
+        {
+            GameUIManager.Instance.ShowMatchEndScreen(true, alivePlayers, pKills, zKills, time);
         }
     }
 }

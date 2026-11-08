@@ -1,4 +1,7 @@
 using Core;
+using Game.Managers;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +11,23 @@ namespace Game.UI
     {
         public InteractorUI InteractorUI;
         [SerializeField] private Slider _playerHealthSlider;
+        [SerializeField] private TextMeshProUGUI _playerAliveText;
+        [SerializeField] private TextMeshProUGUI _playerKillsText;
+        [SerializeField] private TextMeshProUGUI _zombieKillsText;
+        [SerializeField] private TextMeshProUGUI _timerText;
+        [SerializeField] private GameMatchResultUIScreen _gameOverUIScreen;
+
+        private void Start()
+        {
+            GameManager.Instance.AlivePlayersCount.OnChange += OnAlivePlayersChanged;
+            GameManager.Instance.MatchTimeSeconds.OnChange += OnTimerChanged;
+        }
+
+        private void OnAlivePlayersChanged(int prev, int next, bool asServer)
+        {
+            if (asServer == false)
+                _playerAliveText.text = $"Players alive: {next}";
+        }
 
         public void InitializePlayerHealthSlider(int maxHp)
         {
@@ -18,6 +38,36 @@ namespace Game.UI
         public void UpdatePlayerHp(int currentHp)
         {
             _playerHealthSlider.value = currentHp;
+        }
+
+        public void AssignLocalPlayer(GamePlayer localPlayer)
+        {
+            UpdatePlayerKills(localPlayer.PlayerKills.Value);
+            UpdateZombieKills(localPlayer.ZombieKills.Value);
+        }
+
+        private void OnTimerChanged(int prev, int next, bool asServer)
+        {
+            if (asServer == false)
+            {
+                TimeSpan time = TimeSpan.FromSeconds(next);
+                _timerText.text = time.ToString(@"mm\:ss");
+            }
+        }
+
+        public void UpdatePlayerKills(int kills)
+        {
+            _playerKillsText.text = $"Player kills: {kills}";
+        }
+
+        public void UpdateZombieKills(int kills)
+        {
+            _zombieKillsText.text = $"Zombie kills: {kills}";
+        }
+
+        public void ShowMatchEndScreen(bool isVictory, int alivePlayers, int playerKills, int zombieKills, int matchTime)
+        {
+            _gameOverUIScreen.ShowScreen(isVictory, alivePlayers, playerKills, zombieKills, matchTime);
         }
     }
 }

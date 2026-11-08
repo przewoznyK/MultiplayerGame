@@ -43,7 +43,7 @@ namespace Game
                     continue;
 
                 if (enemy.TryGetComponent(out Health enemyHealth))
-                    enemyHealth.TakeDamage(finalDamage);
+                    enemyHealth.TakeDamage(finalDamage, owner);
             }
         }
 

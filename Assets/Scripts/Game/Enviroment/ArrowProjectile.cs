@@ -8,9 +8,9 @@ namespace Game
     {
         public readonly SyncVar<float> Speed = new SyncVar<float>(1);
         private int _damage;
-        private GameObject _owner;
+        private GamePlayer _owner;
 
-        public void Initialize(int damage, float speed, GameObject owner)
+        public void Initialize(int damage, float speed, GamePlayer owner)
         {
             _damage = damage;
             Speed.Value = speed;
@@ -27,11 +27,11 @@ namespace Game
         [Server]
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.gameObject == _owner)
+            if (col.gameObject == _owner.gameObject)
                 return;
 
             if (col.TryGetComponent(out Health enemyHealth))
-                enemyHealth.TakeDamage(_damage);
+                enemyHealth.TakeDamage(_damage, _owner);
 
             DestroyArrow();
         }

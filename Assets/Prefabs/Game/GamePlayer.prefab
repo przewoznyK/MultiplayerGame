@@ -240,6 +240,7 @@ MonoBehaviour:
   GamePlayerStats: {fileID: 7190738324350814588}
   LeftHand: {fileID: 5593352049827718299}
   RightHand: {fileID: 4190052488819756216}
+  GamePlayerHealth: {fileID: 244719304060984084}
   _defaultHands: {fileID: 3618844569329543721}
   _bodySR: {fileID: 2354715782175388423}
   _itemHolder: {fileID: 6090848408938122296}
