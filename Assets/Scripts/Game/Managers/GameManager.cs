@@ -1,6 +1,7 @@
 using Core;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using Game.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,6 +69,18 @@ namespace Game.Managers
         public void ReturnToLobbyServerRpc()
         {
             SceneTransitionManager.Instance.LoadOnlineScene(SceneTransitionManager.Instance.LobbySceneName);
+        }
+
+        [Server]
+        public void AnnounceServerMessage(string message)
+        {
+            ObserversRpcShowServerMessage(message);
+        }
+
+        [ObserversRpc]
+        private void ObserversRpcShowServerMessage(string message)
+        {
+            GameUIManager.Instance.ShowServerMessage(message);
         }
     }
 }

@@ -16,6 +16,9 @@ namespace Game.UI
         [SerializeField] private TextMeshProUGUI _zombieKillsText;
         [SerializeField] private TextMeshProUGUI _timerText;
         [SerializeField] private GameMatchResultUIScreen _gameOverUIScreen;
+        [SerializeField] private ServerMessageItem _serverMessagePrefab;
+        [SerializeField] private Transform _messagesHolder;
+
         private GamePlayerCameraController _playerCameraController;
         private void Start()
         {
@@ -75,6 +78,12 @@ namespace Game.UI
         {
             _playerCameraController.StartSpectating();
             _gameOverUIScreen.gameObject.SetActive(false);
+        }
+
+        public void ShowServerMessage(string message)
+        {
+            ServerMessageItem newMessage = Instantiate(_serverMessagePrefab, _messagesHolder);
+            newMessage.Setup(message);
         }
     }
 }

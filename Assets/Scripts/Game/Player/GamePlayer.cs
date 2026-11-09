@@ -59,6 +59,7 @@ namespace Game
 
             if (GamePlayerHealth.IsDead.Value == false)
             {
+                GameManager.Instance.AnnounceServerMessage($"Player {OwnerId} left the game.");
                 GameManager.Instance.PlayerDisconnected(true);
             }
         }

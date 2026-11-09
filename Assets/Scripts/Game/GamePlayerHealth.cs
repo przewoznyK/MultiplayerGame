@@ -37,8 +37,21 @@ namespace Game
         {
             base.Die();
 
-            if (_lastAttacker != null && _lastAttacker != _gamePlayer)
-                _lastAttacker.AddPlayerKill();
+            string victimName = $"Player {OwnerId}";
+            string killerName = "Unknown";
+
+            if (_lastAttacker != null)
+            {
+                if (_lastAttacker != _gamePlayer)
+                {
+                    killerName = $"Player {_lastAttacker.OwnerId}";
+                    _lastAttacker.AddPlayerKill();
+                }
+            }
+            else
+                killerName = "Zombie";
+
+            GameManager.Instance.AnnounceServerMessage($"{victimName} was killed by {killerName}!");
 
             GameManager.Instance.PlayerDied();
             ShowGameOverScreen(Owner);
