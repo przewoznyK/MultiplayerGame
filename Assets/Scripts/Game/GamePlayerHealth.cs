@@ -37,8 +37,6 @@ namespace Game
         {
             base.Die();
 
-            GamePlayerSpawnManager.Instance.GamePlayers.Remove(_gamePlayer);
-
             if (_lastAttacker != null && _lastAttacker != _gamePlayer)
                 _lastAttacker.AddPlayerKill();
 

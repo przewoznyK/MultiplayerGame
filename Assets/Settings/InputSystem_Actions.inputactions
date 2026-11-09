@@ -1161,6 +1161,56 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "GameCamera",
+            "id": "b7e3bb0c-f176-4c2f-8197-9c20eab98cfd",
+            "actions": [
+                {
+                    "name": "Primary",
+                    "type": "Button",
+                    "id": "34e5e7fd-2dd8-42bd-9f7e-5a80045172fc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Secondary",
+                    "type": "Button",
+                    "id": "b2442908-678a-4511-8bee-50763fafed85",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0f67dd65-1053-40b3-b0f2-04a2274d3395",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Primary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07113f42-c047-4d07-960f-dd268efe3a0f",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Secondary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

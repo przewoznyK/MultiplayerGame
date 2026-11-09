@@ -16,7 +16,7 @@ namespace Game.UI
         [SerializeField] private TextMeshProUGUI _zombieKillsText;
         [SerializeField] private TextMeshProUGUI _timerText;
         [SerializeField] private GameMatchResultUIScreen _gameOverUIScreen;
-
+        private GamePlayerCameraController _playerCameraController;
         private void Start()
         {
             GameManager.Instance.AlivePlayersCount.OnChange += OnAlivePlayersChanged;
@@ -40,8 +40,9 @@ namespace Game.UI
             _playerHealthSlider.value = currentHp;
         }
 
-        public void AssignLocalPlayer(GamePlayer localPlayer)
+        public void AssignLocalPlayer(GamePlayer localPlayer, GamePlayerCameraController playerCameraController)
         {
+            _playerCameraController = playerCameraController;
             UpdatePlayerKills(localPlayer.PlayerKills.Value);
             UpdateZombieKills(localPlayer.ZombieKills.Value);
         }
@@ -68,6 +69,12 @@ namespace Game.UI
         public void ShowMatchEndScreen(bool isVictory, int alivePlayers, int playerKills, int zombieKills, int matchTime)
         {
             _gameOverUIScreen.ShowScreen(isVictory, alivePlayers, playerKills, zombieKills, matchTime);
+        }
+
+        public void EnableSpectatorMode()
+        {
+            _playerCameraController.StartSpectating();
+            _gameOverUIScreen.gameObject.SetActive(false);
         }
     }
 }

@@ -36,7 +36,21 @@ namespace Game
         public override void OnStartClient()
         {
             base.OnStartClient();
-            GameUIManager.Instance.AssignLocalPlayer(this);
+
+            GamePlayerSpawnManager.Instance.GamePlayers.Add(this);
+
+            if (IsOwner)
+            {
+                GamePlayerCameraController cameraController = Camera.main.GetComponent<GamePlayerCameraController>();
+                cameraController.Initialize(transform);
+                GameUIManager.Instance.AssignLocalPlayer(this, cameraController);
+            }
+        }
+
+        public override void OnStopClient()
+        {
+            base.OnStopClient();
+            GamePlayerSpawnManager.Instance.GamePlayers.Remove(this);
         }
 
         public override void OnStopServer()
@@ -45,7 +59,6 @@ namespace Game
 
             if (GamePlayerHealth.IsDead.Value == false)
             {
-                GamePlayerSpawnManager.Instance.GamePlayers.Remove(this);
                 GameManager.Instance.PlayerDisconnected(true);
             }
         }

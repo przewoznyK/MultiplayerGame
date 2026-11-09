@@ -1603,9 +1603,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1052091514}
-        m_TargetAssemblyTypeName: Game.UI.GameOverUIScreen, Assembly-CSharp
-        m_MethodName: SpectatorModeButton
+      - m_Target: {fileID: 1728767649}
+        m_TargetAssemblyTypeName: Game.UI.GameUIManager, Assembly-CSharp
+        m_MethodName: EnableSpectatorMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2142,6 +2142,7 @@ GameObject:
   - component: {fileID: 922090420}
   - component: {fileID: 922090419}
   - component: {fileID: 922090422}
+  - component: {fileID: 922090423}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2267,6 +2268,22 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &922090423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922090418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5591102c93596c341ba5fae4843618de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GamePlayerCameraController
+  _primaryAction: {fileID: -153518592301478818, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _secondaryAction: {fileID: -8301586353338008489, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _cameraOffset: {x: 0, y: 0, z: -10}
+  _followSpeed: 10
 --- !u!1 &997444584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2523,8 +2540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4feed513d27d184480ca5e9311cd357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.UI.GameOverUIScreen
-  _titleText: {fileID: 1186123028}
   _spectatorButton: {fileID: 712058072}
+  _titleText: {fileID: 1186123028}
   _exitButtonText: {fileID: 709909984}
   _playerAliveText: {fileID: 1586331825}
   _playerKillsText: {fileID: 801830593}
