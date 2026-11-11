@@ -4,9 +4,9 @@ using FishNet.Managing.Scened;
 
 public class SceneTransitionManager : PersistentSingleton<SceneTransitionManager>
 {
-    public string MainMenuSceneName = "MainMenuScene";
-    public string LobbySceneName = "Lobby";
-    public string GameScene = "GameScene";
+    public string MainMenuSceneName { get; private set; } = "MainMenuScene";
+    public string LobbySceneName { get; private set; } = "LobbyScene";
+    public string GameScene { get; private set; } = "GameScene";
 
     public void LoadOnlineScene(string sceneName)
     {
