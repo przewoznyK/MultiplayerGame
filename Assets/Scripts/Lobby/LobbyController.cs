@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Lobby
 {
@@ -13,19 +14,16 @@ namespace Lobby
         [SerializeField] private TextMeshProUGUI _lobbyNameText;
         [SerializeField] private Transform _playerListViewContentHolder;
         [SerializeField] private GameObject _playerListItemPrefab;
-        [SerializeField] private GameObject _startGameButton;
+        [SerializeField] private Button _startGameButton;
+        [SerializeField] private Button _readyButton;
+        [SerializeField] private TextMeshProUGUI _readyButtonText;
         private ulong _currentLobbyID;
-
         private List<PlayerLobbySlot> _playerListItems = new();
 
-        public void SetIsOwner()
+        public void Initialize()
         {
-            _startGameButton.SetActive(true);
-        }
-
-        public void StartGame()
-        {
-            SceneTransitionManager.Instance.LoadOnlineScene(SceneTransitionManager.Instance.GameScene);
+            if (InstanceFinder.IsServerStarted)
+                _startGameButton.gameObject.SetActive(true);
         }
 
         public void UpdateLobbyName()
@@ -34,11 +32,32 @@ namespace Lobby
             _lobbyNameText.text = SteamMatchmaking.GetLobbyData(new CSteamID(_currentLobbyID), "name");
         }
 
+        public void EvaluateReadyState()
+        {
+            var players = LobbyPlayerSpawnManager.Instance.LobbyPlayerPawns;
+            bool allReady = players.Count > 0;
+
+            foreach (LobbyPlayerPawn p in players)
+            {
+                if (p.IsReady.Value == false)
+                {
+                    allReady = false;
+                    break;
+                }
+            }
+
+            _startGameButton.interactable = allReady;
+        }
+
+        public void UpdateLocalReadyButtonAppearance(bool isReady)
+        {
+            _readyButtonText.text = isReady ? "CANCEL READY" : "READY";
+        }
+
         public void UpdatePlayerList()
         {
             RemoveStalePlayerItems();
             CreateMissingPlayerItems();
-            UpdateExistingItems();
         }
 
         private void RemoveStalePlayerItems()
@@ -46,8 +65,7 @@ namespace Lobby
             for (int i = _playerListItems.Count - 1; i >= 0; i--)
             {
                 var uiSlot = _playerListItems[i];
-
-                bool playerStillExists = LobbyPlayerSpawnManager.Instance.GamePlayers.Any(p => p.ConnectionID.Value == uiSlot.ConnectionID);
+                bool playerStillExists = LobbyPlayerSpawnManager.Instance.LobbyPlayerPawns.Contains(uiSlot.PlayerData);
 
                 if (playerStillExists == false)
                 {
@@ -59,18 +77,15 @@ namespace Lobby
 
         private void CreateMissingPlayerItems()
         {
-            foreach (var player in LobbyPlayerSpawnManager.Instance.GamePlayers)
+            foreach (var player in LobbyPlayerSpawnManager.Instance.LobbyPlayerPawns)
             {
-                if (_playerListItems.Any(b => b.ConnectionID == player.ConnectionID.Value))
+                if (_playerListItems.Any(slot => slot.PlayerData == player))
                     continue;
 
                 var newPlayerItem = Instantiate(_playerListItemPrefab, _playerListViewContentHolder);
                 var newPlayerItemScript = newPlayerItem.GetComponent<PlayerLobbySlot>();
 
-                newPlayerItemScript.PlayerName = player.PlayerName.Value;
-                newPlayerItemScript.ConnectionID = player.ConnectionID.Value;
-                newPlayerItemScript.PlayerSteamID = player.PlayerSteamID.Value;
-                newPlayerItemScript.SetPlayerValues();
+                newPlayerItemScript.Setup(player);
 
                 var classSelector = newPlayerItem.GetComponentInChildren<LobbyClassSelector>();
                 if (classSelector != null)
@@ -81,22 +96,25 @@ namespace Lobby
             }
         }
 
-        private void UpdateExistingItems()
+        #region Button Callbacks
+        public void OnClickStartGameButton()
         {
-            foreach (var player in LobbyPlayerSpawnManager.Instance.GamePlayers)
+            SceneTransitionManager.Instance.LoadOnlineScene(SceneTransitionManager.Instance.GameScene);
+        }
+
+        public void OnClickReadyButton()
+        {
+            foreach (var player in LobbyPlayerSpawnManager.Instance.LobbyPlayerPawns)
             {
-                foreach (var playerListItemScript in _playerListItems)
+                if (player.IsOwner)
                 {
-                    if (playerListItemScript.ConnectionID == player.ConnectionID.Value)
-                    {
-                        playerListItemScript.PlayerName = player.PlayerName.Value;
-                        playerListItemScript.SetPlayerValues();
-                    }
+                    player.ToggleReadyServerRpc();
+                    break;
                 }
             }
         }
 
-        public void ExitLobby()
+        public void OnClickExitLobbyButton()
         {
             if (InstanceFinder.IsClientStarted)
                 InstanceFinder.ClientManager.StopConnection();
@@ -113,5 +131,6 @@ namespace Lobby
 
             SceneTransitionManager.Instance.LoadMainMenuScene();
         }
+        #endregion
     }
 }

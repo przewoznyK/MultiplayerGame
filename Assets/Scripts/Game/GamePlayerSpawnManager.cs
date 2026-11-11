@@ -1,10 +1,9 @@
 using Core;
 using FishNet.Connection;
 using Game.Managers;
-using Lobby;
+using Global;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Game
@@ -23,19 +22,16 @@ namespace Game
             Transform spawnPoint = GetSpawnPoint();
             int playerClassIndex = 0;
 
-            PlayerLobby sessionData = LobbyPlayerSpawnManager.Instance.GamePlayers.FirstOrDefault(p => p.Owner == conn);
-
-            if (sessionData != null)
+            if (PlayerSession.AllSessions.TryGetValue(conn.ClientId, out PlayerSession sessionData))
                 playerClassIndex = sessionData.ClassIndex.Value;
             else
-                Debug.LogWarning($"Missing lobby data for connection {conn.ClientId}. Defaulting to class 0.");
+                Debug.LogWarning($"Missing PlayerSession for connection {conn.ClientId}. Defaulting to class 0.");
 
             GamePlayer player = Instantiate(_gamePlayerPrefab, spawnPoint.position, spawnPoint.rotation);
             player.Initialize(playerClassIndex);
 
             Spawn(player.gameObject, conn, gameObject.scene);
             GameManager.Instance.PlayerJoined();
-            GamePlayers.Add(player);
 
             if (_zombieSpawned == false)
                 StartCoroutine(SpawnZombieAfterDelay());

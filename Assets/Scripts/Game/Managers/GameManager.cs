@@ -2,6 +2,7 @@ using Core;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using Game.UI;
+using Lobby;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

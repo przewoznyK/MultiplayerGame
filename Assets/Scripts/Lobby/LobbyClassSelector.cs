@@ -13,9 +13,9 @@ namespace Lobby
         [SerializeField] private TextMeshProUGUI _classBuffText;
         [SerializeField] private Button _leftButton;
         [SerializeField] private Button _rightButton;
-        private PlayerLobby _targetPlayer;
+        private LobbyPlayerPawn _targetPlayer;
 
-        public void Setup(PlayerLobby player)
+        public void Setup(LobbyPlayerPawn player)
         {
             _targetPlayer = player;
 
@@ -24,8 +24,8 @@ namespace Lobby
                 _leftButton.gameObject.SetActive(true);
                 _rightButton.gameObject.SetActive(true);
 
-                _leftButton.onClick.AddListener(() => _targetPlayer.CmdChangeClass(-1, PlayerClassManager.Instance.GetClassCount()));
-                _rightButton.onClick.AddListener(() => _targetPlayer.CmdChangeClass(1, PlayerClassManager.Instance.GetClassCount()));
+                _leftButton.onClick.AddListener(() => _targetPlayer.ChangeClass(-1, PlayerClassManager.Instance.GetClassCount()));
+                _rightButton.onClick.AddListener(() => _targetPlayer.ChangeClass(1, PlayerClassManager.Instance.GetClassCount()));
             }
             else
             {
@@ -33,14 +33,14 @@ namespace Lobby
                 _rightButton.gameObject.SetActive(false);
             }
 
-            _targetPlayer.ClassIndex.OnChange += OnClassIndexChanged;
-            UpdateClassVisual(_targetPlayer.ClassIndex.Value);
+            _targetPlayer.SessionData.ClassIndex.OnChange += OnClassIndexChanged;
+            UpdateClassVisual(_targetPlayer.SessionData.ClassIndex.Value);
         }
 
         private void OnDestroy()
         {
             if (_targetPlayer != null)
-                _targetPlayer.ClassIndex.OnChange -= OnClassIndexChanged;
+                _targetPlayer.SessionData.ClassIndex.OnChange -= OnClassIndexChanged;
         }
 
         private void OnClassIndexChanged(int prevIndex, int newIndex, bool asServer)

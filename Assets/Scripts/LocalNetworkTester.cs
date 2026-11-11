@@ -17,8 +17,14 @@ public class LocalNetworkTester : MonoBehaviour
             return;
 
         InstanceFinder.ServerManager.OnServerConnectionState -= OnServerStarted;
-        SceneTransitionManager.Instance.LoadOnlineScene(SceneTransitionManager.Instance.LobbySceneName);
+        InstanceFinder.ClientManager.OnAuthenticated += OnHostAuthenticated;
         InstanceFinder.ClientManager.StartConnection("127.0.0.1");
+    }
+
+    private void OnHostAuthenticated()
+    {
+        InstanceFinder.ClientManager.OnAuthenticated -= OnHostAuthenticated;
+        SceneTransitionManager.Instance.LoadOnlineScene(SceneTransitionManager.Instance.LobbySceneName);
     }
 
     public void TestJoin()

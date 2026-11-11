@@ -51,7 +51,7 @@ namespace Game
 
         private void TryAttackTarget(GameObject target)
         {
-            if (!IsServerInitialized)
+            if (IsServerInitialized == false)
                 return;
 
             if (Time.time < _nextAttackTime)
@@ -64,10 +64,16 @@ namespace Game
 
             _nextAttackTime = Time.time + _attackCooldown;
 
-            if (!_isAttacking)
-                StartCoroutine(Attack());
+            ObserversRpcPlayAttackAnimation();
 
             playerHealth.TakeDamage(_damage);
+        }
+
+        [ObserversRpc]
+        private void ObserversRpcPlayAttackAnimation()
+        {
+            if (_isAttacking == false)
+                StartCoroutine(Attack());
         }
 
         private IEnumerator Attack()
@@ -102,7 +108,7 @@ namespace Game
             Vector2 p0 = hand.localPosition;
 
             Vector2 p1 = startPosition + new Vector2(_arcWidth * side, 0.35f);
-            Vector2 p2 = startPosition + new Vector2(-_arcWidth * side,0.35f);
+            Vector2 p2 = startPosition + new Vector2(-_arcWidth * side, 0.35f);
             Vector2 p3 = startPosition + new Vector2(_punchOffset.x * side, _punchOffset.y);
 
             Quaternion r0 = hand.localRotation;
@@ -118,11 +124,7 @@ namespace Game
                 float t = Mathf.Clamp01(elapsed / _punchTime);
                 float u = 1f - t;
 
-                Vector3 position =
-                    u * u * u * p0 +
-                    3f * u * u * t * p1 +
-                    3f * u * t * t * p2 +
-                    t * t * t * p3;
+                Vector3 position = (u * u * u * p0) + (3f * u * u * t * p1) + (3f * u * t * t * p2) + (t * t * t * p3);
 
                 hand.localPosition = position;
 
