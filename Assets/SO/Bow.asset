@@ -20,5 +20,6 @@ MonoBehaviour:
   WeaponType: 2
   Damage: 5
   AttackSpeed: 2
+  KnockbackForce: 4
   MinProjectileSpeed: 1
   MaxProjectileSpeed: 10

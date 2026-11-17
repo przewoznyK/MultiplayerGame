@@ -20,3 +20,4 @@ MonoBehaviour:
   WeaponType: 1
   Damage: 1
   AttackSpeed: 1
+  KnockbackForce: 2

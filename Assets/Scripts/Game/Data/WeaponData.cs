@@ -10,5 +10,6 @@ namespace Game.Data
         public WeaponType WeaponType;
         public int Damage;
         public float AttackSpeed;
+        public float KnockbackForce;
     }
 }

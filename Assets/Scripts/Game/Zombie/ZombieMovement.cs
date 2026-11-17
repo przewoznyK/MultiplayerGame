@@ -4,21 +4,34 @@ using UnityEngine;
 
 namespace Game
 {
-    public class ZombieMovement : NetworkBehaviour
+    public class ZombieMovement : NetworkBehaviour, IKnockable
     {
         [SerializeField] private float _moveSpeed = 2.5f;
         [SerializeField] private float _rotationSpeed = 360f;
         [SerializeField] private float _detectionRange = 10f;
         [SerializeField] private Rigidbody2D _rb;
+
+        public readonly SyncVar<bool> IsKnockedBack = new SyncVar<bool>();
         private readonly SyncVar<Transform> _target = new SyncVar<Transform>();
 
         private void FixedUpdate()
         {
-            if (IsServerInitialized)
+            if (IsServerInitialized == false)
+                return;
+
+            if (IsKnockedBack.Value)
             {
-                if (_target.Value == null)
-                    FindNearestPlayer();
+                if (_rb.linearVelocity.sqrMagnitude < 0.1f)
+                {
+                    IsKnockedBack.Value = false;
+                    _rb.linearVelocity = Vector2.zero;
+                }
+                else
+                    return;
             }
+
+            if (_target.Value == null)
+                FindNearestPlayer();
 
             MoveTowardsTarget();
         }
@@ -36,10 +49,7 @@ namespace Game
             if (direction.sqrMagnitude > _detectionRange * _detectionRange)
             {
                 _rb.linearVelocity = Vector2.zero;
-
-                if (IsServerInitialized)
-                    _target.Value = null;
-
+                _target.Value = null;
                 return;
             }
 
@@ -70,6 +80,16 @@ namespace Game
             }
 
             _target.Value = nearest;
+        }
+
+        public void ApplyKnockback(Vector2 direction, float force)
+        {
+            if (IsServerInitialized == false)
+                return;
+
+            IsKnockedBack.Value = true;
+            _rb.linearVelocity = Vector2.zero;
+            _rb.AddForce(direction * force, ForceMode2D.Impulse);
         }
     }
 }

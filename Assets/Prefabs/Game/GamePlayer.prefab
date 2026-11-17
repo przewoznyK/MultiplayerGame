@@ -172,7 +172,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -299,8 +299,8 @@ MonoBehaviour:
   _componentIndexCache: 3
   _addedNetworkObject: {fileID: 4124599060348152041}
   _networkObjectCache: {fileID: 4124599060348152041}
+  _rb: {fileID: 3692185500897712075}
   _moveSpeed: 5
-  _rigidbody: {fileID: 3692185500897712075}
 --- !u!114 &244719304060984084
 MonoBehaviour:
   m_ObjectHideFlags: 0

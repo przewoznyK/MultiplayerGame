@@ -69,7 +69,7 @@ namespace Game
 
             ArrowProjectile projectile = owner.NetworkManager.GetPooledInstantiated<ArrowProjectile>(_visualArrowPrefab, _arrowSpawnPoint.position, GetArrowRotation(), true);
 
-            projectile.Initialize(finalDamage, finalSpeed, owner);
+            projectile.Initialize(finalDamage, finalSpeed, owner, _rangeData.KnockbackForce);
             owner.ServerManager.Spawn(projectile.NetworkObject);
 
             _serverChargeStartTime = 0f;

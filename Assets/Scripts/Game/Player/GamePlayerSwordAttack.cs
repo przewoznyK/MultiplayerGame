@@ -44,6 +44,12 @@ namespace Game
 
                 if (enemy.TryGetComponent(out Health enemyHealth))
                     enemyHealth.TakeDamage(finalDamage, owner);
+
+                if (enemy.TryGetComponent(out IKnockable knockableEntity))
+                {
+                    Vector2 knockbackDirection = (enemy.transform.position - owner.transform.position).normalized;
+                    knockableEntity.ApplyKnockback(knockbackDirection, _weaponData.KnockbackForce);
+                }
             }
         }
 

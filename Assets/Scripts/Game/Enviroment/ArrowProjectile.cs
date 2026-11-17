@@ -7,14 +7,16 @@ namespace Game
     public class ArrowProjectile : NetworkBehaviour
     {
         public readonly SyncVar<float> Speed = new SyncVar<float>(1);
+        private float _knockbackForce;
         private int _damage;
         private GamePlayer _owner;
 
-        public void Initialize(int damage, float speed, GamePlayer owner)
+        public void Initialize(int damage, float speed, GamePlayer owner, float knockbackForce)
         {
             _damage = damage;
             Speed.Value = speed;
             _owner = owner;
+            _knockbackForce = knockbackForce;
 
             Invoke(nameof(DestroyArrow), 5f);
         }
@@ -32,6 +34,12 @@ namespace Game
 
             if (col.TryGetComponent(out Health enemyHealth))
                 enemyHealth.TakeDamage(_damage, _owner);
+
+            if (col.TryGetComponent(out IKnockable knockableEntity))
+            {
+                Vector2 knockbackDir = (col.transform.position - transform.position).normalized;
+                knockableEntity.ApplyKnockback(knockbackDir, _knockbackForce);
+            }
 
             DestroyArrow();
         }

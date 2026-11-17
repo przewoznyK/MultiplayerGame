@@ -39,11 +39,6 @@ namespace Game
             _rightStartRotation = _handR.localRotation;
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            TryAttackTarget(collision.gameObject);
-        }
-
         private void OnCollisionStay2D(Collision2D collision)
         {
             TryAttackTarget(collision.gameObject);
