@@ -1,7 +1,8 @@
+using Core;
 using Steamworks;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using Core;
 
 public class LobbiesListManager : Singleton<LobbiesListManager>
 {
@@ -9,12 +10,14 @@ public class LobbiesListManager : Singleton<LobbiesListManager>
     [SerializeField] private LobbyDataEntry _lobbyDataItemPrefab;
     [SerializeField] private GameObject _lobbyListContentHolder;
     [SerializeField] private GameObject _mainMenuHolder;
+    [SerializeField] private TMP_InputField _searchInputField;
     public List<GameObject> ListOfLobbies = new();
 
     public void GetListOfLobbies()
     {
         _mainMenuHolder.SetActive(false);
         _lobbiesMenu.SetActive(true);
+        _searchInputField.text = "";
 
         SteamLobby.Instance.GetLobbiesList();
     }
@@ -32,8 +35,26 @@ public class LobbiesListManager : Singleton<LobbiesListManager>
                 createdItem.transform.SetParent(_lobbyListContentHolder.transform);
                 createdItem.transform.localScale = Vector3.one;
                 ListOfLobbies.Add(createdItem.gameObject);
+                ApplySearchFilter(createdItem.gameObject, createdItem.lobbyName, _searchInputField.text);
             }
         }
+    }
+
+    public void SearchLobbies(string searchTerm)
+    {
+        string lowerSearchTerm = searchTerm.ToLower();
+
+        foreach (var lobbyObj in ListOfLobbies)
+        {
+            if (lobbyObj != null && lobbyObj.TryGetComponent(out LobbyDataEntry entry))
+                ApplySearchFilter(lobbyObj, entry.lobbyName, lowerSearchTerm);
+        }
+    }
+
+    private void ApplySearchFilter(GameObject lobbyObj, string lobbyName, string searchTerm)
+    {
+        bool isMatch = string.IsNullOrEmpty(searchTerm) || lobbyName.ToLower().Contains(searchTerm.ToLower());
+        lobbyObj.SetActive(isMatch);
     }
 
     public void DestroyLobbies()
