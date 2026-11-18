@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Enemy
-  - Interactable
-  - Damageable
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -40,6 +40,24 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 33993527
+    locked: 0
+  - name: GroundDetails
+    uniqueID: 642334823
+    locked: 0
+  - name: Walls
+    uniqueID: 2758685233
+    locked: 0
+  - name: DoorsAndWindows
+    uniqueID: 4154332899
+    locked: 0
+  - name: Furniture
+    uniqueID: 2919827219
+    locked: 0
+  - name: Roof
+    uniqueID: 2128795851
     locked: 0
   m_RenderingLayers:
   - Default
