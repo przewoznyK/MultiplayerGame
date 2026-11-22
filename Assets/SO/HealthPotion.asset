@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b484a1aaae57f9498bce45eab01dea0, type: 3}
+  m_Name: HealthPotion
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Data.ConsumableData
+  ItemID: 3
+  ItemName: Health Potion
+  ItemSprite: {fileID: 2476417197399195537, guid: 47890234700d78446afe52f98b5502ee, type: 3}
+  VisualPrefab: {fileID: -6613885199369530293, guid: 66d07c16d2b6fc44386f6255843119be, type: 3}
+  DropPrefab: {fileID: 8791408524030074236, guid: 7a51ceb1194f307408a56d01d2e06e6a, type: 3}
+  HealAmount: 25
+  ConsumeTime: 2

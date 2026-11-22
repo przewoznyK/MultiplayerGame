@@ -12,11 +12,11 @@ public class ZombieAttack : MonoBehaviour
     [SerializeField] private float returnTime = 0.20f;
 
     [SerializeField] private Vector2 windupOffset = new Vector2(-0.10f, -0.02f);
-    [SerializeField] private Vector2 punchOffset = new Vector2(0.08f, 0.18f);
+    [SerializeField] private Vector2 punchOffset = new Vector2(0.08f, -0.15f);
 
-    [SerializeField] private float arcWidth = 0.30f;
-    [SerializeField] private float windupAngle = 65f;
-    [SerializeField] private float punchAngle = 120f;
+    [SerializeField] private float arcWidth = 0.25f;
+    [SerializeField] private float windupAngle = 45f;
+    [SerializeField] private float punchAngle = 70f;
 
     private Vector3 leftStartPosition;
     private Vector3 rightStartPosition;

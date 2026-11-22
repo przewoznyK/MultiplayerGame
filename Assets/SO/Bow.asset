@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e421d80f50044447b613cd1e7ce7280, type: 3}
+  m_Name: Bow
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Data.RangeWeaponData
+  ItemID: 2
+  ItemName: Bow
+  ItemSprite: {fileID: -7856493677412862020, guid: 0a10a8437a54a0643bd2918ab96eeb9d, type: 3}
+  VisualPrefab: {fileID: 1781370925878031097, guid: fd47fbfea711fcb4ba3a236aff0198cc, type: 3}
+  DropPrefab: {fileID: 7069028042929785331, guid: 73bdeb14cad02c34488c29d349e35b09, type: 3}
+  WeaponType: 2
+  Damage: 5
+  AttackSpeed: 2
+  KnockbackForce: 4
+  MinProjectileSpeed: 1
+  MaxProjectileSpeed: 10

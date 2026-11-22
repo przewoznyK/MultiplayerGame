@@ -11,7 +11,7 @@ public class BowPlayerAttack : MonoBehaviour
     [SerializeField] private GameObject arrowPrefab;
 
     [SerializeField] private float drawTime = 0.18f;
-    [SerializeField] private float returnTime = 0.15f;
+    [SerializeField] private float returnTime = 0.14f;
     [SerializeField] private float bowRecoil = 0.06f;
     [SerializeField] private float arrowSpeed = 8f;
     [SerializeField] private float arrowLifetime = 3f;
